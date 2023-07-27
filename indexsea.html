@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ポップアップ魚</title>
+  <style>
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ffffff;
+      padding: 20px;
+      border: 1px solid #000000;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .sea {
+      position: relative;
+      width: 50%;
+      height: 50vh;
+      margin: 0 auto;
+      border: 2px solid #000000;
+      border-radius: 10px;
+      overflow: scroll;
+    }
+
+    .fish {
+      position: absolute;
+      background-color: #ff0000;
+      color: #ffffff;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: move;
+    }
+  </style>
+</head>
+<body>
+  <div class="sea" id="seaContent"></div>
+
+  <form>
+    <label for="inputText">テキストを入力してください:</label>
+    <input type="text" id="inputText">
+    <button type="button" onclick="createFish()">ポップアップ</button>
+  </form>
+
+  <script src="scriptsea.js" defer></script>
+</body>
+</html>
