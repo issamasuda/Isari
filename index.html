@@ -31,9 +31,20 @@
       border-radius: 10px;
       overflow: hidden; /* スクロールなし */
     }
+    .bucket {
+      position: relative;
+      width: 50%;
+      height: 25vh;
+      margin: 0 auto;
+      border: 2px solid #000000;
+      border-radius: 10px;
+      overflow: hidden; /* スクロールなし */
+    }
+    
   </style>
 </head>
 <body>
+  <div class="bucket" id="bucketContent"></div>
   <div class="sea" id="seaContent"></div>
 
   <form>
@@ -46,5 +57,6 @@
 
   <script src="scriptsea.js" defer></script>
   <script src="scriptriver.js" defer></script>
+  <script src="scriptbucket.js" defer></script>
 </body>
 </html>
