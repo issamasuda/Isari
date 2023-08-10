@@ -51,7 +51,6 @@ function createRiverFish() {
   if (randomWord) {
     addRiverFish(randomWord);
   }
-  removeOldRiverFish();
   riverContent.scrollLeft = riverContent.scrollWidth; // 右端にスクロールする
 }
 
