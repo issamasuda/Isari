@@ -141,15 +141,17 @@ class RiverField extends Field {
         setInterval(this.moveFish.bind(this), fishMoveInterval);
         const fishCreationInterval = 3000;  // 魚の生成間隔（ms）
         // タイマーIDを格納する変数
-        let timer;// = setInterval(this.createFish.bind(this), fishCreationInterval);;
-
+        let timer = setInterval(this.createFish.bind(this), fishCreationInterval);
+        let func = this.createFish.bind(this);
         // フォーカスが当たった場合の処理
         window.addEventListener("focus", function () {
-            timer = setInterval(this.createFish.bind(this), fishCreationInterval);
+            console.log("active")
+            timer = setInterval(func, fishCreationInterval);
         });
 
         // フォーカスが外れた場合の処理
         window.addEventListener("blur", function () {
+            console.log("inactive")
             clearInterval(timer);
         });
 
