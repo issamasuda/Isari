@@ -478,7 +478,7 @@ class Board {
             this.handler.addSyncCursolElement("river");
             this.handler.addSyncCursolElement("bucket");
             // ユーザ情報の設定
-            this.handler.setupAwareness(userName, userColor, "cursorDiv", this.handler.sampleCursorCallback);
+            this.handler.setupAwareness(userName, userColor, "cursorDiv", isariCursorCallback);
             // バケツの共有
             this.handler.addSyncElement("bucket");
             // JSONの同期
