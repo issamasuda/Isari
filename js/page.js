@@ -86,13 +86,10 @@ class SeaField extends Field {
                         </div>
                         <div class="fish-head"></div>
                     </div>
-                    <tr>
-                    <div class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</div>
-                    <div class="username-label">${this.objectList[i].type}</div>
-                    <!-- <tr>
-                    <td class="username-label">${this.objectList[i].type}</td>
-                    <td class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</td>
-                </tr> -->
+                    <div class="fish-label">
+                        <div class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</div>
+                        <div class="username-label">${this.objectList[i].type}</div>
+                    </div>
                 </div>
             `
         }
@@ -175,7 +172,7 @@ class RiverField extends Field {
         setInterval(this.moveFish.bind(this), fishMoveInterval);
         const fishCreationInterval = 3000;  // 魚の生成間隔（ms）
         this.flag = true;
-        
+
         setInterval(this.createFish.bind(this), fishCreationInterval);
 
         // フォーカスが当たった場合の処理

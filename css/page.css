@@ -408,7 +408,17 @@
     line-height: normal;
 }
 
+.fish-label{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 5px;
+    align-items: center;
+    /* justify-content: space-between; */
+}
 .time-label {
+    margin-top: 0px;
+}
+.username-label {
     margin-top: 0px;
 }
 
@@ -474,6 +484,9 @@
 
 /* プロフィール設定とボード共有ウィンドウ */
 .settings-window {
+    position: absolute;
+    top: 60px;
+    right:  20px;
     width: 170px;
     height: 90px;
     border-radius: 25px;
@@ -484,7 +497,7 @@
 
 .prf-setting {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 15px;
     margin-bottom: 8px;
     font-size: 16px;
     font-weight: 700;
