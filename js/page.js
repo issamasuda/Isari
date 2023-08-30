@@ -7,7 +7,7 @@ class ElementObject {
 
 // 魚クラス：魚オブジェクトの基本属性と操作
 class Fish extends ElementObject {
-    constructor(text, position, type, id, datetime = null) {
+    constructor(text, position, type, id, datetime = null,owner) {
         super(id);
         this.text = text;
         this.position = position;
@@ -65,7 +65,7 @@ class SeaField extends Field {
         if (text === "") return;
         id = "seaFish_" + createUuid4();
         this.fishNum++;
-        this.objectList.push(new SeaFish(text, position, type, id));
+        this.objectList.push(new SeaFish(text, position, userName, id));//TODOowner
         this.updateField();
         this.element.scrollLeft = this.element.scrollWidth;
     }
@@ -86,7 +86,10 @@ class SeaField extends Field {
                         </div>
                         <div class="fish-head"></div>
                     </div>
-                    <div class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</div>
+                    <tr>
+                        <td class="username-label">${this.objectList[i].type} </td>
+                        <td class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</td>
+                    </tr>
                 </div>
             `
         }
@@ -110,7 +113,8 @@ class SeaField extends Field {
                 position: fish.position,
                 type: fish.type,
                 id: fish.id,
-                datetime: fish.datetime.toISOString()
+                datetime: fish.datetime.toISOString(),
+                owner: fish.owner
             };
         }));
     }
@@ -119,7 +123,7 @@ class SeaField extends Field {
     jsonToFishList(jsonStr) {
         const jsonObj = JSON.parse(jsonStr);
         this.objectList = jsonObj.map(obj => {
-            return new Fish(obj.text, obj.position, obj.type, obj.id, obj.datetime);
+            return new Fish(obj.text, obj.position, obj.type, obj.id, obj.datetime, obj.owner);
         });
         this.updateField();
     }
