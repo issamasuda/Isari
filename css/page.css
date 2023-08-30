@@ -240,12 +240,6 @@
     z-index: 1001;
 }
 
-@media (max-width: 768px) {
-    .input-board {
-        width: 300px;
-        /* left: calc(50% - 165px) */
-    }
-}
 
 .ib-input-field {
     flex: 1;
@@ -442,6 +436,33 @@
     overflow-y: hidden;
 }
 
+@media (max-width: 768px) {
+    .input-board {
+        min-width: 250px;
+        width: calc(300px);
+        left: calc(100% - 350px);
+    }
+}
+
+@media (max-width: 500px) {
+    /* ヘッダー */
+    #header {
+        padding: 0;
+        gap: 0px;
+        overflow-x: hidden;
+        z-index: 5;
+        height: 60px;
+    }
+    .input-board {
+        min-width: 250px;
+        width: calc(300px);
+        left: calc(100% - 350px);
+    }
+    .add-bucket {
+        top: calc(100% - 200px);
+    }
+}
+
 @media (max-height: 800px) {
     .sea {
         position: absolute;
@@ -515,3 +536,5 @@
         overflow-y: auto;
     }
 }
+
+
