@@ -454,8 +454,15 @@ function setupShareWindow() {
 }
 
 function setValues() {
+    let userNameElement = document.getElementById("username");
+    let userColorElement = document.getElementById("usercolor");
     localStorage.setItem('userName', userNameElement.value);
     localStorage.setItem('userColor', userColorElement.value);
+    if (localStorage.userName != null) userName = localStorage.userName;
+    if (localStorage.userColor != null) userColor = localStorage.userColor;
+    document.getElementById("user").innerText = userName;
+    document.getElementById("user-color").style.backgroundColor = userColor;
+    board.handler.setupAwareness(userNameElement.value, userColorElement.value, "cursorDiv", isariCursorCallback);
 }
 
 // ボードクラス
