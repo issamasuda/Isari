@@ -140,20 +140,24 @@ class RiverField extends Field {
         const fishMoveInterval = 20;  // 魚の動きの更新間隔（ms）
         setInterval(this.moveFish.bind(this), fishMoveInterval);
         const fishCreationInterval = 3000;  // 魚の生成間隔（ms）
-        // タイマーIDを格納する変数
-        let timer = setInterval(this.createFish.bind(this), fishCreationInterval);
-        let func = this.createFish.bind(this);
+        
+        this.flag = true;
+        function SetFlag(bool){
+            this.flag = bool;
+        }
+        let func = SetFlag.bind(this);
+        setInterval(this.createFish.bind(this), fishCreationInterval);
+        
         // フォーカスが当たった場合の処理
         window.addEventListener("focus", function () {
             console.log("active")
-            timer = setInterval(func, fishCreationInterval);
-        });
-
+            this.flag = true;
+        }.bind(this));
         // フォーカスが外れた場合の処理
         window.addEventListener("blur", function () {
             console.log("inactive")
-            clearInterval(timer);
-        });
+            this.flag = false;
+        }.bind(this));
 
     }
 
@@ -178,6 +182,7 @@ class RiverField extends Field {
 
     // 魚を生成
     createFish() {
+        if(this.flag == false)return;
         function getRandomWord() {
             const riverWords = ["apple", "banana", "orange", "grape", "melon"];
             if (riverWords.length === 0) {
@@ -192,7 +197,7 @@ class RiverField extends Field {
         // console.log(fish)
         this.objectList.push(fish);
         this.element.insertAdjacentHTML('afterbegin', `
-<div id="${id}" class="fish" style="top:${20 + (Math.floor(Math.random() * 3) + 1) % 3 * 45}px;" draggable="true" ondragstart="handleDragStart(event)">
+<div id="${id}" class="fish" style="left:-150px;top:${20 + (Math.floor(Math.random() * 3) + 1) % 3 * 45}px;" draggable="true" ondragstart="handleDragStart(event)">
     <div class="fish-body" draggable="true" onKeyPress="(event) => {if(event.key === 'Enter') {return event.preventDefault()}}">
         <div class="fish-tail"></div>
         <div class="fish-content">
