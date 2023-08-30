@@ -26,6 +26,21 @@
     text-align: center;
 }
 
+.board-manager-title{
+    color: #0F5097;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: normal;
+    
+}
+
+hr{
+    border-top: 2px solid rgba(15, 80, 151, 0.20);
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+}
+
 th {
     color: #0F5097;
     font-size: 18px;
@@ -82,6 +97,9 @@ td {
     height: 30px;
     border-radius: 10px;
     background: #F7773A;
+}
+.add-board-button:hover{
+    background-color: #fa8e58;
 }
 
 .add-board-button:active {
@@ -314,6 +332,9 @@ tbody tr:hover {
     height: 30px;
     border-radius: 10px;
     background: #F7773A;
+}
+.bm-create-button:hover{
+    background: #fa8e58;
 }
 
 .bm-create-button:active {
