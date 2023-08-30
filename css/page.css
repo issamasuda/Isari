@@ -1,0 +1,372 @@
+.sea {
+    position: absolute;
+    width: 100vw;
+    height: 40vh;
+    top: 0%;
+    margin: 0 auto;
+    /* border: 2px solid #000000; */
+    border-radius: 10px;
+    overflow: auto;
+    /* スクロール可能にする */
+}
+
+.oldfish {
+    position: absolute;
+    background-color: #ff0000;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: move;
+}
+
+.river {
+    position: absolute;
+    width: 100vw;
+    height: 20vh;
+    top: 40%;
+    margin: 0 auto;
+    /* border: 2px solid #000000;
+    border-radius: 10px; */
+    overflow: hidden;
+    /* スクロールなし */
+}
+
+.add-bucket{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    top: calc(100% - 100px);
+    left: 50px;
+    font-size: 50px;
+    color: #0F5097;
+    border: 4px solid #0F5097;
+    border-radius: 10px;
+    background-color: #a0daff;
+}
+.add-bucket:hover{
+    background-color: #87b9d8;
+}
+
+.page-body {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background-image: url("../img/Background.svg");
+    background-size: 60%;
+}
+
+.background{
+    display: block;
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 60%;
+    top: 0px;
+    left:0px;
+    background-image: url("../img/Background.svg");
+    background-size: 95vh;
+}
+
+.bucket {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: row;
+    position: absolute;
+    width: fit-content;
+    border-radius: 10px;
+    overflow-x: hidden;
+    /* スクロールなし */
+}
+
+.bucketArea {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: 100vw;
+    height: 40vh;
+    top: 60%;
+    margin: 0 auto;
+    background-color: #BBECFF;
+    overflow: auto;
+    /* スクロールなし */
+}
+
+.seaFish {
+    position: absolute;
+    background-color: #2f00ff;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: move;
+}
+
+
+.riverFish {
+    position: absolute;
+    background-color: #ff0000;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: move;
+}
+
+.bucketBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #0F5097;
+    height: fit-content;
+    width: 200px;
+    overflow:visible;
+}
+
+.resizable {
+    min-width: 120px;
+    width: 200px;
+    height: 12vh;
+    padding: 20px;
+    margin: 1rem;
+    background-color: #a0daff;
+    color: white;
+    font-size: 20px;
+    font-family: sans-serif;
+    overflow: hidden;
+    border: 5px solid;
+    border-color: #0F5097;
+    border-radius: 15px;
+
+    touch-action: none;
+    box-sizing: border-box;
+}
+
+.draggable {
+    position: absolute;
+    /* width: auto;
+    height: 30px;
+    background-color: rgb(58, 238, 34); */
+    color: white;
+    border-radius: 0.75em;
+    padding: 5px;
+    z-index: 10;
+    touch-action: none;
+    user-select: none;
+}
+
+
+/* ボード入力欄 */
+.input-board {
+    width: 344px;
+    height: 50px;
+    display: flex;
+    /* display: none; */
+    align-items: center;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    border: 3px solid #E5EDF8;
+    background: #FFF;
+    padding: 10px;
+
+    position: absolute;
+    top: calc(100% - 100px);
+    left: calc(100% - 394px);
+    z-index: 1001;
+}
+
+@media (max-width: 768px) {
+    .input-board {
+        width: 300px;
+        left: calc(50% - 165px)
+    }
+}
+
+.ib-input-field {
+    flex: 1;
+    width: 200px;
+    height: 30px;
+    border-radius: 14px;
+    border: 3px solid rgba(0, 0, 0, 0.02);
+    background: #F3F3F3;
+    margin-left: 4px;
+
+}
+
+.ib-send-button {
+    width: 33px;
+    height: 33px;
+    background-image: url("../img/FishSendButton.svg");
+    background-size: 33px 33px;
+    background-position: center;
+    margin-left: 8px;
+    border-radius: 7px;
+    border: none;
+
+}
+
+.ib-send-button:active {
+    transform: scale(0.98);
+}
+
+
+
+/* さかな */
+.fish-body {
+    display: flex;
+    /* display: none; */
+    align-items: center;
+    justify-content: center;
+}
+
+.fish-tail {
+    width: 35px;
+    height: 44px;
+    background-image: url("../img/FishTail.svg");
+    background-position: center;
+}
+
+.fish-content {
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+    background-color: #BBECFF;
+    height: 36px;
+    font-size: 18px;
+    color: #0F5097;
+    font-family: PT Serif;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.fish-head {
+    width: 26px;
+    height: 36px;
+    background-image: url("../img/FishHead.svg");
+
+    background-position: center;
+}
+
+.fish-tail,
+.fish-content,
+.fish-head {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.fish-tail,
+.fish-head {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.fish {
+    position: absolute;
+    width: fit-content;
+    text-align: right;
+    color: #FFF;
+    font-family: PT Serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.time-label {
+    margin-top: 0px;
+}
+
+/* スケルトンフィッシュ */
+.skeleton-fish {
+    display: flex;
+    /* display: none; */
+    align-items: center;
+    justify-content: center;
+}
+
+.skeleton-fish-tail {
+    width: 33px;
+    height: 44px;
+    background-image: url("../img/SkeletonTail.svg");
+    background-position: center;
+
+}
+
+.skeleton-fish-content {
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+    /* background-color: #BBECFF; */
+    height: 36px;
+    font-size: 18px;
+    color: #FFF;
+    font-family: PT Serif;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.skeleton-fish-head {
+    width: 24px;
+    height: 36px;
+    background-image: url("../img/SkeletonHead.svg");
+    background-position: center;
+}
+
+.skeleton-fish-tail,
+.skeleton-fish-content,
+.skeleton-fish-head {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.skeleton-fish-tail,
+.skeleton-fish-head {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.skeleton-fish-time {
+    text-align: right;
+    color: #FFF;
+    font-family: PT Serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+
+/* プロフィール設定とボード共有ウィンドウ */
+.settings-window {
+    width: 170px;
+    height: 90px;
+    border-radius: 25px;
+    border: 3px solid #FFF;
+    background: #FFF;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+.prf-setting {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0F5097;
+    text-align: center;
+    cursor: pointer;
+}
+
+.b-share {
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #F7773A;
+    text-align: center;
+    cursor: pointer;
+}

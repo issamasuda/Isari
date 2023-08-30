@@ -1,0 +1,159 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f2f2f2;
+  }
+  
+  .profile-settings {
+    padding: 20px;
+    width: 100%;
+    max-width: 300px;
+
+    border-radius: 25px;
+    border: 3px solid #FFF;
+    background: #FFF;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+    text-align: center;
+  }
+  .profile-settings h2{
+    color:#0F5097;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: normal;    
+  }
+  .profile-settings label{
+    color: #0F5097;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #60ADFF;
+    background: #FFF;
+    width: 170px;
+    height: 4px;  
+  }
+  input[type="color"] {
+    border-radius: 5px;
+    border: 2px solid #60ADFF;
+    background: #FFF;
+    width: 194px;
+    height: 28px;
+  }
+  
+  .start-button {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 700;
+    width: 177px;
+    height: 40px;
+    border-radius: 10px;
+    background: #F7773A;
+  }
+
+#start-button {
+    transition: transform 0.2s ease-in-out;  
+  }
+  
+#start-button:active {
+    transform: scale(0.98);  
+  }
+
+  /* ここからボード削除ウィンドウ */
+.board-del-window {
+  display: block;
+  width: 400px;
+  height: 180px;
+  border-radius: 25px;
+  box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+  background: #FFF;
+  position: relative;
+}
+.bd-body{
+  margin-top: 30px;
+  text-align: center;
+} 
+.bd-body h2{
+  color:#0F5097;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: normal;
+}
+.bd-body p{
+  color: #0F5097;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom:25px;
+}
+.bd-close-button {
+  position: absolute;
+  top: 14px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.bd-cancel-button {
+  text-align: center;
+  border:2.5px solid #55A3CD;
+  margin-right: 15px;
+  cursor: pointer;
+  color: #55A3CD;
+  font-size: 14px;
+  font-weight: 700;
+  width: 140px; 
+  height: 30px;
+  border-radius: 10px;
+  background:#FFF;
+}
+.bd-del-button {
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  color: #FFF;
+  font-size: 13px;
+  font-weight: 700;
+  width: 140px; 
+  height: 30px;
+  border-radius: 10px;
+  background: #F7453A;
+}
+.bd-cancel-button:active {
+  transform: scale(0.98);
+}
+.bd-del-button:active {
+  transform: scale(0.98);
+}
+  
+@media (max-width: 300px) {
+    .profile-settings {
+      padding: 10px;
+    }
+  
+    label,
+    input,
+    .start-button {
+      font-size: 14px;
+    }
+  }
+  

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/login.css">
+    <title>ログイン</title>
+    <script defer>
+      let userNameElement = null;
+      let userColorElement = null;
+      function setValues(){
+        localStorage.setItem('userName', userNameElement.value);
+        localStorage.setItem('userColor', userColorElement.value);
+      }
+      function changePage(){
+        const urlParams = new URLSearchParams(window.location.search);
+        roomId   = urlParams.get('roomId');
+        roomName = urlParams.get('roomName');
+        password = urlParams.get('password');
+        
+        console.log(userNameElement.value, userColorElement.value)
+          if (userNameElement.value == ""){
+            alert("ユーザーネームを指定してください");
+            return;
+          }else{
+            setValues();
+            if(roomId != "" && roomId != null){
+              location.href=`./board_manager.html?roomId=${roomId}&roomName=${roomName}&password=${password}`;
+            }else{
+              location.href=`./board_manager.html`;
+            }
+          }
+      }
+      window.onload = () => {
+        const startButtonElement = document.getElementById("start-button");
+        userNameElement = document.getElementById("username");
+        userColorElement = document.getElementById("usercolor");
+        if(localStorage.userName != null)userNameElement.value = localStorage.userName;
+        if(localStorage.userColor != null)userColorElement.value = localStorage.userColor;
+        startButtonElement.addEventListener( "click" , function(e){
+          changePage();
+        });
+        document.addEventListener("keyup", function(event) {
+          if (event.keyCode === 13) {
+            changePage();
+          }
+        });
+        userNameElement.addEventListener( "change" , function(e){
+          setValues();
+        });
+        userColorElement.addEventListener( "change" , function(e){
+          setValues();
+        });
+      }
+    </script>
+</head>
+<body>
+    <div class="profile-settings">
+        <h2>プロフィール設定</h2>
+    
+        <div class="input-group">
+          <label for="username">ユーザネーム</label>
+          <input type="text" id="username" name="username">
+        </div>
+    
+        <div class="input-group">
+          <label for="color">ユーザカラー</label>
+          <form>
+            <input type="color" id="usercolor" list>
+          </form>
+        </div>
+    
+        <button type="button" class="start-button" id="start-button">はじめる</button>
+      </div>
+</body>
+</html>
