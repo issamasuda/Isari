@@ -52,6 +52,7 @@
 #header {
     padding-top: 20px;
     padding-left: 40px;
+    padding-right: 20px;
     display: flex;
     gap: 10px;
     flex-direction: row;
@@ -242,7 +243,7 @@
 @media (max-width: 768px) {
     .input-board {
         width: 300px;
-        left: calc(50% - 165px)
+        /* left: calc(50% - 165px) */
     }
 }
 
@@ -495,6 +496,7 @@
         justify-content: space-between;
         height: 50px;
         width: 60%;
+        overflow: hidden;
     }
 
     .add-bucket {

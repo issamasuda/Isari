@@ -360,6 +360,7 @@ class Board {
         document.getElementById("title").innerText = pageName;
         document.getElementById("user").innerText = userName;
         document.getElementById("user-color").style.backgroundColor = userColor;
+        document.getElementById("page-title").innerText = pageName;
         this.connect();
     }
 
