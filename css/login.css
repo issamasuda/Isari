@@ -1,74 +1,87 @@
+/* ヘッダー */
+Header {
+  position: fixed;
+  top: 3px;
+  left:10px;
+  width: 100%; 
+  padding: 10px;
+  color: #0F5097;
+}
+Header img{
+  margin-left: 20px;
+}
+
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f2f2f2;
-  }
-  
-  .profile-settings {
-    padding: 20px;
-    width: 100%;
-    max-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f2f2f2;
+}
 
-    border-radius: 25px;
-    border: 3px solid #FFF;
-    background: #FFF;
-    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
-    text-align: center;
-  }
-  .profile-settings h2{
-    color:#0F5097;
-    font-size: 28px;
-    font-weight: 700;
-    line-height: normal;    
-  }
-  .profile-settings label{
-    color: #0F5097;
-    font-size: 16px;
-    font-weight: 700;
-  }
 
-  .input-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
+.profile-settings {
+  padding: 20px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 25px;
+  border: 3px solid #FFF;
+  background: #FFF;
+  box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+.profile-settings h2{
+  color:#0F5097;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: normal;    
+}
+.profile-settings label{
+  color: #0F5097;
+  font-size: 16px;
+  font-weight: 700;
+}
+.input-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+input[type="text"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #60ADFF;
+  background: #FFF;
+  width: 170px;
+  height: 4px;  
+}
 
-  input[type="text"] {
-    padding: 10px;
-    border-radius: 5px;
-    border: 2px solid #60ADFF;
-    background: #FFF;
-    width: 170px;
-    height: 4px;  
-  }
-  input[type="color"] {
-    border-radius: 5px;
-    border: 2px solid #60ADFF;
-    background: #FFF;
-    width: 194px;
-    height: 28px;
-  }
-  
-  .start-button {
-    width: 100%;
-    padding: 10px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
-    color: #FFF;
-    font-size: 16px;
-    font-weight: 700;
-    width: 177px;
-    height: 40px;
-    border-radius: 10px;
-    background: #F7773A;
-  }  .start-button:hover {
-    background: #fa8e58;
-  }
+input[type="color"] {
+  border-radius: 5px;
+  border: 2px solid #60ADFF;
+  background: #FFF;
+  width: 194px;
+  height: 28px;
+}
+.start-button {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  color: #FFF;
+  font-size: 16px;
+  font-weight: 700;
+  width: 177px;
+  height: 40px;
+  border-radius: 10px;
+  background: #F7773A;
+}  
+
+.start-button:hover {
+  background: #fa8e58;
+}
 
 #start-button {
     transition: transform 0.2s ease-in-out;  

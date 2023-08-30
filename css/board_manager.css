@@ -1,3 +1,15 @@
+Header {
+    display: flex;
+    position: fixed;
+    top: 3px;
+    left:10px;
+    width: 100%; 
+    padding: 10px;
+    color: #0F5097;
+}
+Header img{
+    margin-left: 20px;
+}
 .board-manager-body {
     display: flex;
     justify-content: center;

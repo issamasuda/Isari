@@ -55,7 +55,7 @@ class SeaField extends Field {
     handleDrop(e) {
         const droppedElement = document.getElementById(e.dataTransfer.getData('id'));
         const droppedParentElement = document.getElementById(e.dataTransfer.getData('parentId'));
-        if (droppedParentElement.classList.contains("fish") && droppedParentElement.parentElement.id == "river") {
+        if (droppedParentElement.classList.contains("fish")) {
             this.createFish(droppedParentElement.firstElementChild.children[1].innerHTML, "position", "type", `convert_${e.dataTransfer.getData('id')}`);
         }
     }
@@ -65,7 +65,7 @@ class SeaField extends Field {
         if (text === "") return;
         id = "seaFish_" + createUuid4();
         this.fishNum++;
-        this.objectList.push(new SeaFish(text, position, userName, id));//TODOowner
+        this.objectList.push(new SeaFish(text, position, userName, id));
         this.updateField();
         this.element.scrollLeft = this.element.scrollWidth;
     }
@@ -87,9 +87,12 @@ class SeaField extends Field {
                         <div class="fish-head"></div>
                     </div>
                     <tr>
-                        <td class="username-label">${this.objectList[i].type} </td>
-                        <td class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</td>
-                    </tr>
+                    <div class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</div>
+                    <div class="username-label">${this.objectList[i].type}</div>
+                    <!-- <tr>
+                    <td class="username-label">${this.objectList[i].type}</td>
+                    <td class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</td>
+                </tr> -->
                 </div>
             `
         }
@@ -171,24 +174,18 @@ class RiverField extends Field {
         const fishMoveInterval = 20;  // 魚の動きの更新間隔（ms）
         setInterval(this.moveFish.bind(this), fishMoveInterval);
         const fishCreationInterval = 3000;  // 魚の生成間隔（ms）
-
-        this.flag = true;
-        function SetFlag(bool) {
-            this.flag = bool;
-        }
-        let func = SetFlag.bind(this);
-        setInterval(this.createFish.bind(this), fishCreationInterval);
+        // タイマーIDを格納する変数
+        let timer;// = setInterval(this.createFish.bind(this), fishCreationInterval);;
 
         // フォーカスが当たった場合の処理
         window.addEventListener("focus", function () {
-            console.log("active")
-            this.flag = true;
-        }.bind(this));
+            timer = setInterval(this.createFish.bind(this), fishCreationInterval);
+        });
+
         // フォーカスが外れた場合の処理
         window.addEventListener("blur", function () {
-            console.log("inactive")
-            this.flag = false;
-        }.bind(this));
+            clearInterval(timer);
+        });
 
         this.randomGen = uniqueRandomGenerator(3);
     }
@@ -227,6 +224,7 @@ class RiverField extends Field {
         // console.log(fish)
         this.objectList.push(fish);
         this.element.insertAdjacentHTML('afterbegin', `
+
 <div id="${id}" class="fish" style="left:-300px;top:${20 + row * 45}px;" draggable="true" ondragstart="handleDragStart(event)">
     <div class="fish-body" draggable="true" onKeyPress="(event) => {if(event.key === 'Enter') {return event.preventDefault()}}">
         <div class="fish-tail"></div>
@@ -442,6 +440,7 @@ function isariCursorCallback(values, parentId) {
     });
 }
 
+
 // グローバルから見えるインスタンスの変数を作成
 let seaField, riverField, bucketField, board;
 let userName, userColor, pageName, pageId, password;
@@ -466,7 +465,6 @@ class Board {
         document.getElementById("title").innerText = pageName;
         document.getElementById("user").innerText = userName;
         document.getElementById("user-color").style.backgroundColor = userColor;
-        document.getElementById("page-title").innerText = pageName;
         this.connect();
     }
 
@@ -474,13 +472,13 @@ class Board {
         let roomId = pageId;
         console.log(userName, userColor, pageName, pageId, password);
         this.handler = new IsariBackend();
-        this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password, timeout: 100000 }).then((message) => {
+        this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password, timeout: 4000 }).then((message) => {
             // カーソル共有
             this.handler.addSyncCursolElement("sea");
             this.handler.addSyncCursolElement("river");
             this.handler.addSyncCursolElement("bucket");
             // ユーザ情報の設定
-            this.handler.setupAwareness(userName, userColor, "cursorDiv", isariCursorCallback); //this.handler.sampleCursorCallback
+            this.handler.setupAwareness(userName, userColor, "cursorDiv", this.handler.sampleCursorCallback);
             // バケツの共有
             this.handler.addSyncElement("bucket");
             // JSONの同期
