@@ -55,7 +55,7 @@ class SeaField extends Field {
     handleDrop(e) {
         const droppedElement = document.getElementById(e.dataTransfer.getData('id'));
         const droppedParentElement = document.getElementById(e.dataTransfer.getData('parentId'));
-        if (droppedParentElement.classList.contains("fish")) {
+        if (droppedParentElement.classList.contains("fish") && droppedParentElement.parentElement.id == "river") {
             this.createFish(droppedParentElement.firstElementChild.children[1].innerHTML, "position", "type", `convert_${e.dataTransfer.getData('id')}`);
         }
     }
@@ -86,13 +86,10 @@ class SeaField extends Field {
                         </div>
                         <div class="fish-head"></div>
                     </div>
-                    <tr>
-                    <div class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</div>
-                    <div class="username-label">${this.objectList[i].type}</div>
-                    <!-- <tr>
-                    <td class="username-label">${this.objectList[i].type}</td>
-                    <td class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</td>
-                </tr> -->
+                    <div class="fish-label">
+                        <div class="time-label">${this.objectList[i].datetime.getHours()}:${this.objectList[i].datetime.getMinutes().toString().padStart(2, '0')}</div>
+                        <div class="username-label">${this.objectList[i].type}</div>
+                    </div>
                 </div>
             `
         }
@@ -174,18 +171,20 @@ class RiverField extends Field {
         const fishMoveInterval = 20;  // 魚の動きの更新間隔（ms）
         setInterval(this.moveFish.bind(this), fishMoveInterval);
         const fishCreationInterval = 3000;  // 魚の生成間隔（ms）
-        // タイマーIDを格納する変数
-        let timer;// = setInterval(this.createFish.bind(this), fishCreationInterval);;
+        this.flag = true;
+
+        setInterval(this.createFish.bind(this), fishCreationInterval);
 
         // フォーカスが当たった場合の処理
         window.addEventListener("focus", function () {
-            timer = setInterval(this.createFish.bind(this), fishCreationInterval);
-        });
-
+            console.log("active")
+            this.flag = true;
+        }.bind(this));
         // フォーカスが外れた場合の処理
         window.addEventListener("blur", function () {
-            clearInterval(timer);
-        });
+            console.log("inactive")
+            this.flag = false;
+        }.bind(this));
 
         this.randomGen = uniqueRandomGenerator(3);
     }
@@ -420,8 +419,8 @@ function isariCursorCallback(values, parentId) {
                     usernameSpan.style.fontSize = '19px';
                     usernameSpan.style.color = value.user.color;
                     usernameSpan.style.pointerEvents = 'none';
-                    usernameSpan.style.webkitTextStroke = '0.5px #FFF';
-                    usernameSpan.style.stroke = '0.5px #FFF';
+                    // usernameSpan.style.webkitTextStroke = '0.5px #FFF';
+                    // usernameSpan.style.stroke = '0.5px #FFF';
                     usernameSpan.style.fontWeight = '1200'
                     usernameSpan.textContent = value.user.name; // ユーザー名を設定
 
@@ -441,9 +440,23 @@ function isariCursorCallback(values, parentId) {
 }
 
 
+
 // グローバルから見えるインスタンスの変数を作成
 let seaField, riverField, bucketField, board;
 let userName, userColor, pageName, pageId, password;
+
+// 設定表示 
+function setupShareWindow() {
+    document.getElementById('profile-settings').classList.remove('hidden');
+    const url = createShareUrl(pageId, pageName, password);
+    document.getElementById("sharing-board-name").value = url;
+    createShare2dCode(pageId, pageName, password, "QRCode")
+}
+
+function setValues() {
+    localStorage.setItem('userName', userNameElement.value);
+    localStorage.setItem('userColor', userColorElement.value);
+}
 
 // ボードクラス
 class Board {
@@ -465,14 +478,17 @@ class Board {
         document.getElementById("title").innerText = pageName;
         document.getElementById("user").innerText = userName;
         document.getElementById("user-color").style.backgroundColor = userColor;
+        let userNameElement = document.getElementById("username");
+        let userColorElement = document.getElementById("usercolor");
+        if (localStorage.userName != null) userNameElement.value = localStorage.userName;
+        if (localStorage.userColor != null) userColorElement.value = localStorage.userColor;
         this.connect();
     }
 
     connect() {
-        let roomId = pageId;
         console.log(userName, userColor, pageName, pageId, password);
         this.handler = new IsariBackend();
-        this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password, timeout: 4000 }).then((message) => {
+        this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password, timeout: 100000 }).then((message) => {
             // カーソル共有
             this.handler.addSyncCursolElement("sea");
             this.handler.addSyncCursolElement("river");

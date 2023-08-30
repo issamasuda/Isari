@@ -14,6 +14,8 @@
     <script src="https://isari.f5.si/js/isari_backend.js"></script>
     <script src="./js/page.js" defer></script>
     <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+    <script src="./js/qrcode.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body class="page-body">
@@ -28,7 +30,9 @@
         <div style="display: flex;align-items: center;">
             <div id="user-color"> </div>
             <div id="user">user</div>
-            <div id="user-button"><img src="./img/SettingsButtonDown.svg" alt=""></div>
+            <div id="user-button"
+                onclick="document.getElementById('settings-window').classList.toggle('hidden');if(document.getElementById('settings-window').classList.contains('hidden')){document.getElementById('toggle').src='./img/SettingsButtonDown.svg'}else{document.getElementById('toggle').src='./img/SettingsButtonDown.svg'}">
+                <img id="toggle" src="./img/SettingsButtonDown.svg" alt=""></div>
         </div>
     </div>
     <div class="water-area">
@@ -47,11 +51,52 @@
     </form>
     <button class="add-bucket"
         onclick="bucketField.createBucket(document.getElementById('inputText').value, 'backet')">+</button>
-        
+
     <div id="loading">
         <div class="loader"></div>
         <div class="loading-background"></div>
         <div class="loading-text">読み込み中</div>
+    </div>
+    <div id="settings-window" class="settings-window hidden">
+        <div class="prf-setting" onclick="setupShareWindow();document.getElementById('settings-window').classList.toggle('hidden');if(document.getElementById('settings-window').classList.contains('hidden')){document.getElementById('toggle').src='./img/SettingsButtonDown.svg'}else{document.getElementById('toggle');}">共有と設定</div>
+    </div>
+    <div id="profile-settings" class="profile-settings hidden">
+        <h2>共有と設定</h2>
+        <div class="bm-header">
+            <button class="bm-close-button"
+                onclick="document.getElementById('profile-settings').classList.toggle('hidden');"><img
+                    src="./img/XButton.svg" width="25" height="25" alt=""></button>
+        </div>
+        <div class="profile-settings-inner">
+            <div class="profile-settings-item">
+                
+                <form class="bm-body"
+                    onsubmit="navigator.clipboard.writeText(document.getElementById('sharing-board-name').value);return false;">
+                    <div id="QRCode" class="QRCode">
+                    </div>
+                    <input type="text" id="sharing-board-name" class="bm-sharing-input-field" value="https://example.com"
+                        readonly>
+                    <button id="board-share-button" type="submit" class="bm-create-button">リンクをコピー</button>
+                </form>
+            </div>
+            <div class="profile-settings-item">
+                <div class="input-group">
+                    <label for="username">ユーザネーム</label>
+                    <input type="text" id="username" name="username">
+                </div>
+    
+                <div class="input-group">
+                    <label for="color">ユーザカラー</label>
+                    <form>
+                        <input type="color" id="usercolor" list>
+                    </form>
+                </div>
+    
+                <button type="button" class="bm-create-button" id="start-button" onclick="setValues();">保存</button>
+    
+            </div>
+        </div>
+        
     </div>
 </body>
 
