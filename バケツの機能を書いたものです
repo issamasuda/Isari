@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end; /* 右寄せに変更 */
+    align-items: flex-start; /* 上寄せに変更 */
+    min-height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  .container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 2px solid #333;
+  }
+
+  .draggable {
+    position: absolute;
+    border: 2px solid black;
+    cursor: move;
+  }
+
+  .border-name {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+  }
+</style>
+<title>Drag and Resize Border (OOP)</title>
+</head>
+<body>
+<div class="container">
+  <button id="generateButton">Generate Border</button>
+  <input type="text" id="borderName" placeholder="Enter border name">
+  <button id="setNameButton">Set Name</button>
+</div>
+<script>
+  class DraggableBorder {
+    constructor(container) {
+      this.container = container;
+      this.borders = []; // 管理する枠の配列
+    }
+
+    createBorder(name) {
+      const existingBorders = this.container.querySelectorAll(".draggable");
+      let xPosition = this.container.offsetWidth - 50;
+      let yPosition = 0;
+
+      if (existingBorders.length > 0) {
+        const lastBorder = existingBorders[existingBorders.length - 1];
+        xPosition = parseFloat(lastBorder.style.left) - 60;
+        if (xPosition < 0) {
+          xPosition = this.container.offsetWidth - 50;
+          yPosition = parseFloat(lastBorder.style.top) + lastBorder.offsetHeight + 10;
+        }
+      }
+
+      const border = document.createElement("div");
+      border.classList.add("draggable");
+      border.style.width = "50px";
+      border.style.height = "50px";
+      border.style.left = xPosition + "px";
+      border.style.top = yPosition + "px";
+
+      let isDragging = false;
+      let isResizing = false;
+      let offsetX, offsetY;
+      let initialWidth, initialHeight;
+
+      border.addEventListener("mousedown", (e) => {
+        if (e.offsetX > border.offsetWidth - 10 && e.offsetY > border.offsetHeight - 10) {
+          isResizing = true;
+          initialWidth = border.offsetWidth;
+          initialHeight = border.offsetHeight;
+        } else {
+          isDragging = true;
+          offsetX = e.clientX - border.getBoundingClientRect().left;
+          offsetY = e.clientY - border.getBoundingClientRect().top;
+        }
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (isDragging) {
+          const x = e.clientX - offsetX;
+          const y = e.clientY - offsetY;
+
+          border.style.left = x + "px";
+          border.style.top = y + "px";
+        } else if (isResizing) {
+          const newWidth = initialWidth + (e.clientX - border.getBoundingClientRect().right);
+          const newHeight = initialHeight + (e.clientY - border.getBoundingClientRect().bottom);
+
+          border.style.width = newWidth + "px";
+          border.style.height = newHeight + "px";
+        }
+      });
+
+      document.addEventListener("mouseup", () => {
+        isDragging = false;
+        isResizing = false;
+      });
+
+      this.container.appendChild(border);
+
+      // ボーダーの情報をオブジェクトとして追加
+      const borderInfo = {
+        element: border,
+        name: name || "Unnamed Border"
+      };
+      this.borders.push(borderInfo);
+
+      // 名前を表示する要素を生成して追加
+      const nameElement = document.createElement("div");
+      nameElement.classList.add("border-name");
+      nameElement.textContent = borderInfo.name;
+      border.appendChild(nameElement);
+    }
+
+    setBorderName(index, name) {
+      this.borders[index].name = name;
+      // 名前を表示する要素のテキストも更新
+      this.borders[index].element.querySelector(".border-name").textContent = name;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const container = document.querySelector(".container");
+    const generateButton = document.getElementById("generateButton");
+    const setNameButton = document.getElementById("setNameButton");
+    const borderNameInput = document.getElementById("borderName");
+
+    const draggableBorder = new DraggableBorder(container);
+
+    generateButton.addEventListener("click", function() {
+      draggableBorder.createBorder();
+    });
+
+    setNameButton.addEventListener("click", function() {
+      const name = borderNameInput.value;
+      const selectedBorderIndex = draggableBorder.borders.length - 1; // 最後に生成されたボーダーのインデックスを選択
+      draggableBorder.setBorderName(selectedBorderIndex, name);
+    });
+  });
+</script>
+</body>
+</html>
