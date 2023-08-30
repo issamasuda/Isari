@@ -7,7 +7,7 @@ class ElementObject {
 
 // 魚クラス：魚オブジェクトの基本属性と操作
 class Fish extends ElementObject {
-    constructor(text, position, type, id, datetime = null,owner) {
+    constructor(text, position, type, id, datetime = null, owner) {
         super(id);
         this.text = text;
         this.position = position;
@@ -136,11 +136,38 @@ function handleDragStart(e) {
     e.dataTransfer.setData('parentId', e.srcElement.parentNode.id);
 }
 
+let uniqueRandomGenerator = function (n) {
+    let lastValue = null;
+
+    return function () {
+        let newValue;
+        do {
+            newValue = Math.floor(Math.random() * n);
+        } while (newValue === lastValue);
+
+        lastValue = newValue;
+        return newValue;
+    };
+};
+
 // 川フィールドクラス：川の魚を管理
 class RiverField extends Field {
     constructor(id) {
         super(id);
         this.fishNum = 0;
+
+
+        fetch('./data/words_1000.txt')
+            .then(response => response.text())
+            .then(text => {
+                this.words = text.trim().split('\n');
+                // console.log("Words List:", this.words);
+            })
+            .catch(error => {
+                this.words = ["apple", "banana", "orange", "grape", "melon"];
+                console.error(error)
+            });
+
         const fishMoveInterval = 20;  // 魚の動きの更新間隔（ms）
         setInterval(this.moveFish.bind(this), fishMoveInterval);
         const fishCreationInterval = 3000;  // 魚の生成間隔（ms）
@@ -163,6 +190,7 @@ class RiverField extends Field {
             this.flag = false;
         }.bind(this));
 
+        this.randomGen = uniqueRandomGenerator(3);
     }
 
     getRandomRow(numRows = 5) {
@@ -177,31 +205,29 @@ class RiverField extends Field {
             // 移動
             objectElement.style.left = (currentLeft - 1 + 2) + 'px';
             // 余分な魚を削除
-            if (currentLeft > window.screen.width) {
+            if (currentLeft > window.screen.width * 2) {
                 objectElement.remove();
                 this.objectList.splice(i, 1);
             }
         };
     }
 
+    createRand(num) {
+        return (Math.floor(Math.random() * num) + 1) % num;
+    }
+
     // 魚を生成
     createFish() {
         if (this.flag == false) return;
-        function getRandomWord() {
-            const riverWords = ["apple", "banana", "orange", "grape", "melon"];
-            if (riverWords.length === 0) {
-                return null;
-            }
-            const randomIndex = Math.floor(Math.random() * riverWords.length);
-            return riverWords[randomIndex];
-        }
         const id = `${createUuid4()}`;
-        const words = getRandomWord();
-        const fish = new RiverFish(words, "null", "river", id, 1)
+        const words = this.words[Math.floor(Math.random() * this.words.length)];
+        const fish = new RiverFish(words, "null", "river", id, 1);
+        if (this.row == null) this.row = this.createRand(3);
+        const row = this.randomGen();
         // console.log(fish)
         this.objectList.push(fish);
         this.element.insertAdjacentHTML('afterbegin', `
-<div id="${id}" class="fish" style="left:-150px;top:${20 + (Math.floor(Math.random() * 3) + 1) % 3 * 45}px;" draggable="true" ondragstart="handleDragStart(event)">
+<div id="${id}" class="fish" style="left:-300px;top:${20 + row * 45}px;" draggable="true" ondragstart="handleDragStart(event)">
     <div class="fish-body" draggable="true" onKeyPress="(event) => {if(event.key === 'Enter') {return event.preventDefault()}}">
         <div class="fish-tail"></div>
         <div class="fish-content">
@@ -363,7 +389,7 @@ function isariCursorCallback(values, parentId) {
                 // スクロール位置をカーソル位置に反映
                 let cursorX = pos.x + element.getBoundingClientRect().left - scrollLeft - (cursorWidth / 2);
                 let cursorY = pos.y + element.getBoundingClientRect().top - scrollTop - (cursorHeight / 2);
-                
+
                 // カーソル座標が要素の境界内にあるかをチェック
                 if (pos.x - scrollLeft >= 0 && pos.x - scrollLeft <= rect.width && pos.y - scrollTop >= 0 && pos.y - scrollTop <= rect.height) {
                     // カーソル座標が要素の境界内にある場合のみ描画
@@ -393,9 +419,12 @@ function isariCursorCallback(values, parentId) {
                     var usernameSpan = document.createElement('span');
                     usernameSpan.style.position = 'absolute';
                     usernameSpan.style.bottom = '0px'; // カーソルの下側
-                    usernameSpan.style.fontSize = '12px';
+                    usernameSpan.style.fontSize = '19px';
                     usernameSpan.style.color = value.user.color;
                     usernameSpan.style.pointerEvents = 'none';
+                    usernameSpan.style.webkitTextStroke = '0.5px #FFF';
+                    usernameSpan.style.stroke = '0.5px #FFF';
+                    usernameSpan.style.fontWeight = '1200'
                     usernameSpan.textContent = value.user.name; // ユーザー名を設定
 
                     // カーソルが中央より右側にあれば名前を左側に表示
@@ -448,7 +477,7 @@ class Board {
         this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password, timeout: 100000 }).then((message) => {
             // カーソル共有
             this.handler.addSyncCursolElement("sea");
-            // this.handler.addSyncCursolElement("river");
+            this.handler.addSyncCursolElement("river");
             this.handler.addSyncCursolElement("bucket");
             // ユーザ情報の設定
             this.handler.setupAwareness(userName, userColor, "cursorDiv", isariCursorCallback); //this.handler.sampleCursorCallback
@@ -459,7 +488,12 @@ class Board {
                 seaField.jsonToFishList(this.jsonHandler.getJson());
             });
             // JSON初期化
-            seaField.jsonToFishList(this.jsonHandler.getJson());
+            try {
+                seaField.jsonToFishList(this.jsonHandler.getJson());
+            } catch (error) {
+                console.error(error);
+            }
+            document.getElementById("loading").style.display = "none";
         });
     }
 }

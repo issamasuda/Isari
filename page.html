@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
-    <title id="page-title">Isari</title>
+    <title id="page-title">ISARI</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="./css/board_manager.css"> -->
     <link rel="stylesheet" href="./css/page.css">
-    <style>
-    </style>
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="./img/favicon.ico">
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="./img/favicon.webp">
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="./img/favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="https://isari.f5.si/js/isari_backend.js"></script>
     <script src="./js/page.js" defer></script>
@@ -31,7 +32,7 @@
         </div>
     </div>
     <div class="water-area">
-        <div class="sea" id="sea" draggable="false"></div>
+        <div class="sea scroll_bar" id="sea" draggable="false"></div>
         <div class="river" id="river" draggable="false"></div>
     </div>
 
@@ -46,7 +47,12 @@
     </form>
     <button class="add-bucket"
         onclick="bucketField.createBucket(document.getElementById('inputText').value, 'backet')">+</button>
-
+        
+    <div id="loading">
+        <div class="loader"></div>
+        <div class="loading-background"></div>
+        <div class="loading-text">読み込み中</div>
+    </div>
 </body>
 
 </html>
