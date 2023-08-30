@@ -1,3 +1,10 @@
+body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+
+
 .scroll_bar::-webkit-scrollbar {
     width: 2px;
 }
@@ -753,8 +760,46 @@ input[type="color"] {
     width: 100%;
 }
 
+@media print {
 
-@media (max-width: 768px) {
+    #cursorDiv {
+        display: none;
+    }
+
+    .profile-settings {
+        display: none;
+    }
+
+    .settings-window {
+        display: none;
+    }
+    #loading {
+        display: none;
+    }
+    body {
+        zoom: 0.5;
+    }
+
+    .sea {
+        width: 100%;
+    }
+
+    .river {
+        width: 100%;
+    }
+
+    .bucketArea {
+        width: 100%;
+    }
+    .water-area {
+        width: 100%;
+    }
+    @page {
+        size: A4 landscape;
+    }
+}
+
+@media only screen and (max-width: 768px) {
     .input-board {
         min-width: 250px;
         width: calc(300px);
@@ -762,7 +807,7 @@ input[type="color"] {
     }
 }
 
-@media (max-width: 500px) {
+@media only screen and (max-width: 500px) {
 
     /* ヘッダー */
     #header {
@@ -784,7 +829,7 @@ input[type="color"] {
     }
 }
 
-@media (max-height: 800px) {
+@media only screen and (max-height: 800px) {
 
 
 
@@ -875,3 +920,4 @@ input[type="color"] {
     }
 
 }
+
