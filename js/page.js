@@ -441,7 +441,7 @@ class Board {
         let roomId = pageId;
         console.log(userName, userColor, pageName, pageId, password);
         this.handler = new IsariBackend();
-        this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password, timeout: 4000 }).then((message) => {
+        this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password, timeout: 100000 }).then((message) => {
             // カーソル共有
             this.handler.addSyncCursolElement("sea");
             // this.handler.addSyncCursolElement("river");
