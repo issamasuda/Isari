@@ -64,7 +64,7 @@ function updateRoomList(){
                 <td style="">　</td>
                 <td style="">　</td>
                 <td style="">　</td>
-                <td class="_td" style="position:absolute;top:67px;left:100px;pointer-events: none;">ボードがありません</div>
+                <td class="_td" style="position:absolute;top:127px;left:100px;pointer-events: none;">ボードがありません</div>
             </tr>
             
             `);
