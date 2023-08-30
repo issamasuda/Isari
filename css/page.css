@@ -1,8 +1,8 @@
 .sea {
     position: absolute;
     width: 100vw;
-    height: 40vh;
-    top: 0%;
+    height: 350px;
+    top: 10px;
     margin: 0 auto;
     /* border: 2px solid #000000; */
     border-radius: 10px;
@@ -10,20 +10,11 @@
     /* スクロール可能にする */
 }
 
-.oldfish {
-    position: absolute;
-    background-color: #ff0000;
-    color: #ffffff;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: move;
-}
-
 .river {
     position: absolute;
     width: 100vw;
-    height: 20vh;
-    top: 40%;
+    height: 180px;
+    top: 360px;
     margin: 0 auto;
     /* border: 2px solid #000000;
     border-radius: 10px; */
@@ -31,7 +22,93 @@
     /* スクロールなし */
 }
 
-.add-bucket{
+.background {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 600px;
+    top: 0px;
+    left: 0px;
+    background-image: url("../img/Background.svg");
+    background-size: 950px;
+}
+
+.bucketArea {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: 100vw;
+    height: calc(100% - 600px);
+    min-height: 200px;
+    top: 600px;
+    margin: 0 auto;
+    background-color: #BBECFF;
+    overflow: auto;
+    /* スクロールなし */
+}
+
+/* ヘッダー */
+#header {
+    padding-top: 20px;
+    padding-left: 40px;
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 100%;
+}
+
+#title{
+    font-family: sans-serif;
+    font-size: 40px;
+    color: #0F5097;
+}
+
+#user-color{
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    border: 2px solid;
+    border-color: #0F5097;
+}
+
+#user{
+    font-family: sans-serif;
+    font-size: 30px;
+    color: #0F5097;
+}
+
+#user-button{
+    position: relative;
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #E1F3FD;
+    border: 4px solid;
+    border-radius: 15px;
+    border-color: #E1F3FD;
+    padding-left: 4px;
+}
+#user-button img{
+    position: relative;
+    top:0px;
+    left: -2px;
+}
+#user-button:hover{
+    background-color: #c4d3db;
+    border-color: #c4d3db;
+}
+
+.logo {
+    z-index: 10;
+}
+
+.add-bucket {
     position: absolute;
     display: flex;
     align-items: center;
@@ -46,9 +123,11 @@
     border-radius: 10px;
     background-color: #a0daff;
 }
-.add-bucket:hover{
+
+.add-bucket:hover {
     background-color: #87b9d8;
 }
+
 
 .page-body {
     display: block;
@@ -56,22 +135,14 @@
     align-items: center;
     height: 100vh;
     margin: 0;
-    overflow: hidden;
-    background-image: url("../img/Background.svg");
-    background-size: 60%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: #0F5097;
+    /* background-image: url("../img/Background.svg");
+    background-size: 600px; */
 }
 
-.background{
-    display: block;
-    position: absolute;
-    z-index: 0;
-    width: 100%;
-    height: 60%;
-    top: 0px;
-    left:0px;
-    background-image: url("../img/Background.svg");
-    background-size: 95vh;
-}
+
 
 .bucket {
     display: flex;
@@ -84,18 +155,7 @@
     /* スクロールなし */
 }
 
-.bucketArea {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    width: 100vw;
-    height: 40vh;
-    top: 60%;
-    margin: 0 auto;
-    background-color: #BBECFF;
-    overflow: auto;
-    /* スクロールなし */
-}
+
 
 .seaFish {
     position: absolute;
@@ -123,7 +183,8 @@
     color: #0F5097;
     height: fit-content;
     width: 200px;
-    overflow:visible;
+    overflow: visible;
+    position: absolute;
 }
 
 .resizable {
@@ -369,4 +430,86 @@
     color: #F7773A;
     text-align: center;
     cursor: pointer;
+}
+
+.water-area{
+    position: absolute;
+    width: 100vw;
+    height: 530px;
+    top: 70px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+@media (max-height: 800px) {
+    .sea {
+        position: absolute;
+        width: 100%;
+        height: 350px;
+        top: 0px;
+        margin: 0 auto;
+        /* border: 2px solid #000000; */
+        border-radius: 10px;
+        overflow: auto;
+        /* スクロール可能にする */
+    }
+
+    .river {
+        position: absolute;
+        width: 100%;
+        height: 380px;
+        top: 350px;
+        margin: 0 auto;
+        /* border: 2px solid #000000;
+        border-radius: 10px; */
+        overflow: hidden;
+        /* スクロールなし */
+    }
+
+    .background {
+        background-size: 950px;
+    }
+
+    .bucketArea {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        width: 40%;
+        height: 100vh;
+        min-height: 200px;
+        top: 0%;
+        left: 60%;
+        margin: 0 auto;
+        background-color: #BBECFF;
+        overflow: scroll;
+    }
+
+    /* ヘッダー */
+    #header {
+        padding-top: 20px;
+        padding-left: 20px;
+        display: flex;
+        gap: 10px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 50px;
+        width: 60%;
+    }
+
+    .add-bucket {
+        left: calc(60% + 50px);
+    }
+
+    .input-board {
+        width: 300px;
+        left: calc(30% - 165px)
+    }
+
+    .water-area{
+        height: 100vh;
+        width: 60%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
 }

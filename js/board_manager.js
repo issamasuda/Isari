@@ -1,4 +1,4 @@
-const backend = new IsariBackend({ host: "wss://isari.f5.si/ws/", port: "443", room: "room", password: "", timeout: 1000 });
+const backend = new IsariBackend();
     
 function getCurrentUrlWithoutQuery() {
     const protocol = window.location.protocol;

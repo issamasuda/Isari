@@ -63,7 +63,7 @@ class SeaField extends Field {
     // 魚を生成
     createFish(text, position, type, id) {
         if (text === "") return;
-        id = "seaFish_" + this.fishNum;
+        id = "seaFish_" + createUuid4();
         this.fishNum++;
         this.objectList.push(new SeaFish(text, position, type, id));
         this.updateField();
@@ -78,7 +78,7 @@ class SeaField extends Field {
         let text = "";
         for (let i = 0; i < this.objectList.length; i++) {
             text += `
-                <div id="${this.objectList[i].id}" class="fish" style="left:${50 + i * 100}px;top:${50 + i % 4 * 100}px;" draggable="true" ondragstart="handleDragStart(event)" oncontextmenu="if(window.confirm('削除してもよろしいですか？')){seaField.removeFish('${this.objectList[i].id}')}return false;">
+                <div id="${this.objectList[i].id}" class="fish" style="left:${20 + i * 100}px;top:${20 + i % 4 * 80}px;" draggable="true" ondragstart="handleDragStart(event)" oncontextmenu="if(window.confirm('削除してもよろしいですか？')){seaField.removeFish('${this.objectList[i].id}')}return false;">
                     <div class="fish-body" draggable="true" onKeyPress="(event) => {if(event.key === 'Enter') {return event.preventDefault()}}">
                         <div class="fish-tail"></div>
                         <div class="fish-content" contentEditable onchange="if(board.handler != null){board.jsonHandler.updateJson(seaField.fishListToJson());}">
@@ -140,7 +140,19 @@ class RiverField extends Field {
         const fishMoveInterval = 20;  // 魚の動きの更新間隔（ms）
         setInterval(this.moveFish.bind(this), fishMoveInterval);
         const fishCreationInterval = 3000;  // 魚の生成間隔（ms）
-        setInterval(this.createFish.bind(this), fishCreationInterval);
+        // タイマーIDを格納する変数
+        let timer;// = setInterval(this.createFish.bind(this), fishCreationInterval);;
+
+        // フォーカスが当たった場合の処理
+        window.addEventListener("focus", function () {
+            timer = setInterval(this.createFish.bind(this), fishCreationInterval);
+        });
+
+        // フォーカスが外れた場合の処理
+        window.addEventListener("blur", function () {
+            clearInterval(timer);
+        });
+
     }
 
     getRandomRow(numRows = 5) {
@@ -172,12 +184,13 @@ class RiverField extends Field {
             const randomIndex = Math.floor(Math.random() * riverWords.length);
             return riverWords[randomIndex];
         }
+        const id = `${createUuid4()}`;
         const words = getRandomWord();
-        const fish = new RiverFish(words, "null", "river", `${this.id}_${this.fishNum}`, 1)
+        const fish = new RiverFish(words, "null", "river", id, 1)
         // console.log(fish)
         this.objectList.push(fish);
         this.element.insertAdjacentHTML('afterbegin', `
-<div id="${this.id}_${this.fishNum}" class="fish" style="top:${20 + (Math.floor(Math.random() * 3) + 1) % 3 * 45}px;" draggable="true" ondragstart="handleDragStart(event)">
+<div id="${id}" class="fish" style="top:${20 + (Math.floor(Math.random() * 3) + 1) % 3 * 45}px;" draggable="true" ondragstart="handleDragStart(event)">
     <div class="fish-body" draggable="true" onKeyPress="(event) => {if(event.key === 'Enter') {return event.preventDefault()}}">
         <div class="fish-tail"></div>
         <div class="fish-content">
@@ -291,7 +304,7 @@ class BucketField extends Field {
             let rect = this.element.getBoundingClientRect();
             let x = e.clientX - rect.x;
             let y = e.clientY - rect.y;
-            let id = "bucket_fish_" + this.fishNum;
+            let id = "bucket_fish_" + createUuid4();
             this.fishNum++;
             this.element.insertAdjacentHTML('afterbegin', `
                 <div id="${id}" class="draggable" data-x="${x}" data-y="${y}" contentEditable style="transform: translate(${x}px, ${y}px);" oncontextmenu="if(window.confirm('削除してもよろしいですか？')){ document.getElementById('${id}').remove();}return false;">
@@ -301,23 +314,25 @@ class BucketField extends Field {
         }
     }
 
+
+
     // バケツを生成
     createBucket(text, id) {
-        id = "bucket_" + this.bucketNum;
+        id = "bucket_" + createUuid4();
         this.bucketNum++;
         let bucket = new Bucket(id, text);
         this.objectList.push(bucket);
-        this.element.scrollLeft = this.element.scrollWidth;
-        document.querySelectorAll('.resizable').forEach((draggable) => {
-            let draggableTarget = draggable.parentElement,
-                            x = (parseFloat(draggableTarget.getAttribute('data-x')) || 0) - 200,
-                            y = (parseFloat(draggableTarget.getAttribute('data-y')) || 0);
-            draggableTarget.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
-            draggableTarget.setAttribute('data-x', x);
-        });
-        this.element.insertAdjacentHTML('afterbegin', `<div id="${id}" class="bucketBox" oncontextmenu="if(window.confirm('削除してもよろしいですか？')){document.getElementById('${id}').remove();}return false;"><div class="resizable"></div><b><div contentEditable>名前を入力</div></b></div>`);
+        this.element.insertAdjacentHTML('beforeend', `<div id="${id}" class="bucketBox" oncontextmenu="if(window.confirm('削除してもよろしいですか？')){document.getElementById('${id}').remove();}return false;"><div class="resizable"></div><b><div style="width:fit-content;" contentEditable>名前を入力</div></b></div>`);
     }
 }
+
+function createUuid4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (a) {
+        let r = (new Date().getTime() + Math.random() * 16) % 16 | 0, v = a == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 
 // グローバルから見えるインスタンスの変数を作成
 let seaField, riverField, bucketField, board;
@@ -326,20 +341,23 @@ let userName, userColor, pageName, pageId, password;
 // ボードクラス
 class Board {
     constructor() {
-        if(localStorage.userName  != null) userName  = localStorage.userName ;
-        if(localStorage.userColor != null) userColor = localStorage.userColor;
-        if(localStorage.pageName  != null) pageName  = localStorage.pageName ;
-        if(localStorage.pageId    != null) pageId    = localStorage.pageId   ;
-        if(localStorage.password  != null) password  = localStorage.password ;
-        if(userName == null){
-            location.href=`./login.html`;
+        if (localStorage.userName != null) userName = localStorage.userName;
+        if (localStorage.userColor != null) userColor = localStorage.userColor;
+        if (localStorage.pageName != null) pageName = localStorage.pageName;
+        if (localStorage.pageId != null) pageId = localStorage.pageId;
+        if (localStorage.password != null) password = localStorage.password;
+        if (userName == null) {
+            location.href = `./login.html`;
         }
-        if(pageId == null){
-            location.href=`./board_manager.html`;
+        if (pageId == null) {
+            location.href = `./board_manager.html`;
         }
         seaField = new SeaField("sea");
         riverField = new RiverField("river");
         bucketField = new BucketField("bucket");
+        document.getElementById("title").innerText = pageName;
+        document.getElementById("user").innerText = userName;
+        document.getElementById("user-color").style.backgroundColor = userColor;
         this.connect();
     }
 
@@ -347,7 +365,7 @@ class Board {
         let roomId = pageId;
         console.log(userName, userColor, pageName, pageId, password);
         this.handler = new IsariBackend();
-        this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password , timeout:4000}).then((message) => {
+        this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password, timeout: 4000 }).then((message) => {
             // カーソル共有
             this.handler.addSyncCursolElement("sea");
             // this.handler.addSyncCursolElement("river");
