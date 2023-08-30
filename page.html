@@ -72,6 +72,7 @@
                 
                 <form class="bm-body"
                     onsubmit="navigator.clipboard.writeText(document.getElementById('sharing-board-name').value);return false;">
+                    <label>共有リンク</label>
                     <div id="QRCode" class="QRCode">
                     </div>
                     <input type="text" id="sharing-board-name" class="bm-sharing-input-field" value="https://example.com"
@@ -81,18 +82,21 @@
             </div>
             <div class="profile-settings-item">
                 <div class="input-group">
-                    <label for="username">ユーザネーム</label>
+                    <label>ユーザネーム</label>
                     <input type="text" id="username" name="username">
                 </div>
     
                 <div class="input-group">
-                    <label for="color">ユーザカラー</label>
+                    <label>ユーザカラー</label>
                     <form>
                         <input type="color" id="usercolor" list>
                     </form>
                 </div>
     
                 <button type="button" class="bm-create-button" id="start-button" onclick="setValues();">保存</button>
+                <br>　<br>　
+                <label>ページの印刷</label>
+                <button type="button" class="bm-create-button" id="start-button" onclick="window.print();">印刷</button>
     
             </div>
         </div>
