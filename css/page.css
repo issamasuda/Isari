@@ -1,0 +1,515 @@
+.sea {
+    position: absolute;
+    width: 100vw;
+    height: 350px;
+    top: 10px;
+    margin: 0 auto;
+    /* border: 2px solid #000000; */
+    border-radius: 10px;
+    overflow: auto;
+    /* スクロール可能にする */
+}
+
+.river {
+    position: absolute;
+    width: 100vw;
+    height: 180px;
+    top: 360px;
+    margin: 0 auto;
+    /* border: 2px solid #000000;
+    border-radius: 10px; */
+    overflow: hidden;
+    /* スクロールなし */
+}
+
+.background {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 600px;
+    top: 0px;
+    left: 0px;
+    background-image: url("../img/Background.svg");
+    background-size: 950px;
+}
+
+.bucketArea {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: 100vw;
+    height: calc(100% - 600px);
+    min-height: 200px;
+    top: 600px;
+    margin: 0 auto;
+    background-color: #BBECFF;
+    overflow: auto;
+    /* スクロールなし */
+}
+
+/* ヘッダー */
+#header {
+    padding-top: 20px;
+    padding-left: 40px;
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 100%;
+}
+
+#title{
+    font-family: sans-serif;
+    font-size: 40px;
+    color: #0F5097;
+}
+
+#user-color{
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    border: 2px solid;
+    border-color: #0F5097;
+}
+
+#user{
+    font-family: sans-serif;
+    font-size: 30px;
+    color: #0F5097;
+}
+
+#user-button{
+    position: relative;
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #E1F3FD;
+    border: 4px solid;
+    border-radius: 15px;
+    border-color: #E1F3FD;
+    padding-left: 4px;
+}
+#user-button img{
+    position: relative;
+    top:0px;
+    left: -2px;
+}
+#user-button:hover{
+    background-color: #c4d3db;
+    border-color: #c4d3db;
+}
+
+.logo {
+    z-index: 10;
+}
+
+.add-bucket {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    top: calc(100% - 100px);
+    left: 50px;
+    font-size: 50px;
+    color: #0F5097;
+    border: 4px solid #0F5097;
+    border-radius: 10px;
+    background-color: #a0daff;
+}
+
+.add-bucket:hover {
+    background-color: #87b9d8;
+}
+
+
+.page-body {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: #0F5097;
+    /* background-image: url("../img/Background.svg");
+    background-size: 600px; */
+}
+
+
+
+.bucket {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: row;
+    position: absolute;
+    width: fit-content;
+    border-radius: 10px;
+    overflow-x: hidden;
+    /* スクロールなし */
+}
+
+
+
+.seaFish {
+    position: absolute;
+    background-color: #2f00ff;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: move;
+}
+
+
+.riverFish {
+    position: absolute;
+    background-color: #ff0000;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: move;
+}
+
+.bucketBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #0F5097;
+    height: fit-content;
+    width: 200px;
+    overflow: visible;
+    position: absolute;
+}
+
+.resizable {
+    min-width: 120px;
+    width: 200px;
+    height: 12vh;
+    padding: 20px;
+    margin: 1rem;
+    background-color: #a0daff;
+    color: white;
+    font-size: 20px;
+    font-family: sans-serif;
+    overflow: hidden;
+    border: 5px solid;
+    border-color: #0F5097;
+    border-radius: 15px;
+
+    touch-action: none;
+    box-sizing: border-box;
+}
+
+.draggable {
+    position: absolute;
+    /* width: auto;
+    height: 30px;
+    background-color: rgb(58, 238, 34); */
+    color: white;
+    border-radius: 0.75em;
+    padding: 5px;
+    z-index: 10;
+    touch-action: none;
+    user-select: none;
+}
+
+
+/* ボード入力欄 */
+.input-board {
+    width: 344px;
+    height: 50px;
+    display: flex;
+    /* display: none; */
+    align-items: center;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    border: 3px solid #E5EDF8;
+    background: #FFF;
+    padding: 10px;
+
+    position: absolute;
+    top: calc(100% - 100px);
+    left: calc(100% - 394px);
+    z-index: 1001;
+}
+
+@media (max-width: 768px) {
+    .input-board {
+        width: 300px;
+        left: calc(50% - 165px)
+    }
+}
+
+.ib-input-field {
+    flex: 1;
+    width: 200px;
+    height: 30px;
+    border-radius: 14px;
+    border: 3px solid rgba(0, 0, 0, 0.02);
+    background: #F3F3F3;
+    margin-left: 4px;
+
+}
+
+.ib-send-button {
+    width: 33px;
+    height: 33px;
+    background-image: url("../img/FishSendButton.svg");
+    background-size: 33px 33px;
+    background-position: center;
+    margin-left: 8px;
+    border-radius: 7px;
+    border: none;
+
+}
+
+.ib-send-button:active {
+    transform: scale(0.98);
+}
+
+
+
+/* さかな */
+.fish-body {
+    display: flex;
+    /* display: none; */
+    align-items: center;
+    justify-content: center;
+}
+
+.fish-tail {
+    width: 35px;
+    height: 44px;
+    background-image: url("../img/FishTail.svg");
+    background-position: center;
+}
+
+.fish-content {
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+    background-color: #BBECFF;
+    height: 36px;
+    font-size: 18px;
+    color: #0F5097;
+    font-family: PT Serif;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.fish-head {
+    width: 26px;
+    height: 36px;
+    background-image: url("../img/FishHead.svg");
+
+    background-position: center;
+}
+
+.fish-tail,
+.fish-content,
+.fish-head {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.fish-tail,
+.fish-head {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.fish {
+    position: absolute;
+    width: fit-content;
+    text-align: right;
+    color: #FFF;
+    font-family: PT Serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.time-label {
+    margin-top: 0px;
+}
+
+/* スケルトンフィッシュ */
+.skeleton-fish {
+    display: flex;
+    /* display: none; */
+    align-items: center;
+    justify-content: center;
+}
+
+.skeleton-fish-tail {
+    width: 33px;
+    height: 44px;
+    background-image: url("../img/SkeletonTail.svg");
+    background-position: center;
+
+}
+
+.skeleton-fish-content {
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+    /* background-color: #BBECFF; */
+    height: 36px;
+    font-size: 18px;
+    color: #FFF;
+    font-family: PT Serif;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.skeleton-fish-head {
+    width: 24px;
+    height: 36px;
+    background-image: url("../img/SkeletonHead.svg");
+    background-position: center;
+}
+
+.skeleton-fish-tail,
+.skeleton-fish-content,
+.skeleton-fish-head {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.skeleton-fish-tail,
+.skeleton-fish-head {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.skeleton-fish-time {
+    text-align: right;
+    color: #FFF;
+    font-family: PT Serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+
+/* プロフィール設定とボード共有ウィンドウ */
+.settings-window {
+    width: 170px;
+    height: 90px;
+    border-radius: 25px;
+    border: 3px solid #FFF;
+    background: #FFF;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+.prf-setting {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0F5097;
+    text-align: center;
+    cursor: pointer;
+}
+
+.b-share {
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #F7773A;
+    text-align: center;
+    cursor: pointer;
+}
+
+.water-area{
+    position: absolute;
+    width: 100vw;
+    height: 530px;
+    top: 70px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+@media (max-height: 800px) {
+    .sea {
+        position: absolute;
+        width: 100%;
+        height: 350px;
+        top: 0px;
+        margin: 0 auto;
+        /* border: 2px solid #000000; */
+        border-radius: 10px;
+        overflow: auto;
+        /* スクロール可能にする */
+    }
+
+    .river {
+        position: absolute;
+        width: 100%;
+        height: 380px;
+        top: 350px;
+        margin: 0 auto;
+        /* border: 2px solid #000000;
+        border-radius: 10px; */
+        overflow: hidden;
+        /* スクロールなし */
+    }
+
+    .background {
+        background-size: 950px;
+    }
+
+    .bucketArea {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        width: 40%;
+        height: 100vh;
+        min-height: 200px;
+        top: 0%;
+        left: 60%;
+        margin: 0 auto;
+        background-color: #BBECFF;
+        overflow: scroll;
+    }
+
+    /* ヘッダー */
+    #header {
+        padding-top: 20px;
+        padding-left: 20px;
+        display: flex;
+        gap: 10px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 50px;
+        width: 60%;
+    }
+
+    .add-bucket {
+        left: calc(60% + 50px);
+    }
+
+    .input-board {
+        width: 300px;
+        left: calc(30% - 165px)
+    }
+
+    .water-area{
+        height: 100vh;
+        width: 60%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}

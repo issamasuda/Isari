@@ -1,0 +1,447 @@
+.board-manager-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url("../img/Background.svg");
+    background-size: 160vh;
+}
+
+.board-manager {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+
+    padding: 20px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 25px;
+    border: 3px solid #FFF;
+    background: #FFF;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+th {
+    color: #0F5097;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: normal;
+    padding: 10px;
+}
+
+.table-wrapper {
+    overflow-x: visible;
+    overflow-y: visible;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+
+td {
+    color: rgba(15, 80, 151, 0.90);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px;
+    border-top: 2px solid rgba(15, 80, 151, 0.20);
+}
+
+._td {
+    color: rgba(15, 80, 151, 0.90);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px;
+    border-top: 0px solid rgba(15, 80, 151, 0.20);
+}
+
+.dots-icon img {
+    background-color: #F7773A;
+
+}
+
+.add-board-button {
+    bottom: 10px;
+    right: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 700;
+    width: 140px;
+    height: 30px;
+    border-radius: 10px;
+    background: #F7773A;
+}
+
+.add-board-button:active {
+    transform: scale(0.98);
+}
+
+.add-board-button:disabled {
+    background: #ffc5aa;
+}
+
+tbody tr:hover {
+    background-color: rgba(15, 80, 151, 0.05);
+    /* 任意の色に設定 */
+}
+
+
+/* 非表示クラス */
+.hidden {
+    display: none;
+}
+
+/* リストアイテムのスタイリング */
+.list-item {
+    position: relative;
+
+}
+
+.list-item:hover {
+    background-color: rgba(9, 49, 92, 0.05);
+}
+
+.list-item:hover+tbody tr {
+    background-color: #FFF;
+}
+
+/* 選択肢（ドロップダウンメニュー）のスタイリング */
+.menu {
+    position: absolute;
+    width: 40px;
+    right: 0%;
+    top: 70%;
+
+    z-index: 90;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #000000;
+    /* 今回は#000000を指定していますが、好きな色を指定できます */
+}
+
+/* ここから名前変更、ボード消去ウィンドウ */
+
+.name-del-window {
+    display: absolute;
+    width: 200px;
+    height: 130px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    border: 3px solid #FFF;
+    background: #FFF;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 100;
+}
+
+
+.close-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    float: right;
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+
+.name-button {
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    /* margin-bottom: 8px; */
+    font-size: 18px;
+    font-weight: 700;
+    color: #0F5097;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+}
+
+.share-button {
+    display: block;
+    width: 100%;
+    /* margin-top: 30px;
+    margin-bottom: 8px; */
+    font-size: 18px;
+    font-weight: 700;
+    color: #0F5097;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+}
+
+.del-button {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+    color: #F7453A;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+}
+
+.del-button:hover {
+    background-color: rgba(15, 80, 151, 0.05);
+}
+
+.name-button:hover {
+    background-color: rgba(15, 80, 151, 0.05);
+}
+
+.share-button:hover {
+    background-color: rgba(15, 80, 151, 0.05);
+}
+
+
+
+/* ここからボードをつくるウィンドウ */
+
+.board-make-window {
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 250px;
+    height: 180px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+    background: #FFF;
+    position: relative;
+    z-index: 100;
+}
+
+.board-share-window {
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 25px;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+    background: #FFF;
+    position: relative;
+    z-index: 99;
+}
+
+.bm-body {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.bm-body label {
+    color: #0F5097;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.bm-close-button {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.bm-body {
+    padding: 20px;
+}
+
+.bm-input-field {
+    width: 180px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #F3F3F3;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+}
+
+.bm-share-input-field {
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #F3F3F3;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+}
+
+.bm-sharing-input-field {
+    width: 200px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #F3F3F3;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+}
+
+.bm-create-button {
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 700;
+    width: 140px;
+    height: 30px;
+    border-radius: 10px;
+    background: #F7773A;
+}
+
+.bm-create-button:active {
+    transform: scale(0.98);
+}
+
+.bm-create-button:disabled {
+    background: #ffc5aa;
+}
+
+.QRCode {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ここからボード削除ウィンドウ */
+.board-del-window {
+    width: 400px;
+    height: 180px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+    background: #FFF;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+
+    z-index: 100;
+}
+
+.bd-body {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.bd-body h2 {
+    color: #0F5097;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.bd-body p {
+    color: #0F5097;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 25px;
+}
+
+.bd-close-button {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.bd-cancel-button {
+    text-align: center;
+    border: 2.5px solid #55A3CD;
+    margin-right: 15px;
+    cursor: pointer;
+    color: #55A3CD;
+    font-size: 14px;
+    font-weight: 700;
+    width: 140px;
+    height: 30px;
+    border-radius: 10px;
+    background: #FFF;
+}
+
+.bd-del-button {
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    color: #FFF;
+    font-size: 13px;
+    font-weight: 700;
+    width: 140px;
+    height: 30px;
+    border-radius: 10px;
+    background: #F7453A;
+}
+
+.bd-cancel-button:active {
+    transform: scale(0.98);
+}
+
+.bd-del-button:active {
+    transform: scale(0.98);
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.popup {
+    position: relative;
+    margin: 15% auto;
+    padding: 20px;
+    background-color: #fff;
+    width: 30%;
+}
+
+
+
+@media (max-width: 300px) {
+    .board-manager {
+        padding: 10px;
+    }
+
+    label,
+    input,
+    .start-button {
+        font-size: 14px;
+    }
+}

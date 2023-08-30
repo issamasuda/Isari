@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/board_manager.css">
+    <title>タイトル</title>
+    <script src="https://isari.f5.si/js/isari_backend.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/board_manager.js" defer></script>
+</head>
+<body class="board-manager-body">
+    <header>
+        <div class="icon"></div>
+        <div class="user-info">
+            <div class="user-icon"></div>
+            <h2 class="user-name"></h2>
+        </div>
+    </header>
+    <div>
+
+        <div class="board-manager">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ボード名</th>
+                            <th>アクセス</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="roomList">
+                        
+                    </tbody>
+                </table>
+            </div>
+            <button class="add-board-button" id="add-board-button" onclick="document.getElementById('board-make').classList.remove('hidden');overlay(true);">ボードを追加</button>
+        </div>
+        <div id="overlay" class="overlay">
+            
+        </div>
+        <div id="board-make" class="board-make-window hidden">
+            <div class="bm-header">
+                <button class="bm-close-button" onclick="document.getElementById('board-make').classList.toggle('hidden');"><img src="./img/XButton.svg" width="25" height="25" alt=""></button>
+            </div>
+            <form class="bm-body" onsubmit="backend.createRoom(document.getElementById('board-name').value, '');updateRoomList();document.getElementById('board-make').classList.toggle('hidden');return false;">
+                <label for="board-name">ボード名</label>
+                <input type="text" id="board-name" class="bm-input-field" placeholder="ボードの名前を入力...">
+                <button class="bm-create-button" type="submit" onclick="">ボードを作る</button>
+            </form>
+        </div>
+        <div id="board-change" class="board-make-window hidden">
+            <div class="bm-header">
+                <button class="bm-close-button" onclick="document.getElementById('board-change').classList.toggle('hidden');"><img src="./img/XButton.svg" width="25" height="25" alt=""></button>
+            </div>
+            <form class="bm-body" onsubmit="backend.updateRoom(changeId, document.getElementById('change-board-name').value, '');updateRoomList();document.getElementById('board-change').classList.toggle('hidden');return false;">
+                <label for="change-board-name">ボード名</label>
+                <input type="text" id="change-board-name" class="bm-input-field" placeholder="ボードの名前を入力...">
+                <button id="board-change-button" type="submit" class="bm-create-button">ボードを保存</button>
+            </form>
+        </div>
+        <div id="board-share-submit" class="board-make-window hidden">
+            <div class="bm-header">
+                <button class="bm-close-button" onclick="document.getElementById('board-share-submit').classList.toggle('hidden');"><img src="./img/XButton.svg" width="25" height="25" alt=""></button>
+            </div>
+            <form class="bm-body" onsubmit="console.log(roomId);backend.createRoomById(roomId, document.getElementById('share-board-name').value, password).then(room => {updateRoomList();}).catch(error => {console.warn('Failed to create room:', error.message);alert('すでに同じIDのボードが存在します。')});updateRoomList();document.getElementById('board-share-submit').classList.toggle('hidden');return false;">
+                <label for="share-board-name">共有ボードを登録</label><br>
+                <div>
+                    <label style="font-size: 15px;padding: 0px;">ボード名：</label>
+                    <input id="share-board-name"  class="bm-share-input-field" value="">
+                </div>
+                <button id="board-share-submit-button" type="submit" class="bm-create-button">ボードを保存</button>
+            </form>
+        </div>
+        <div id="board-share" class="board-share-window hidden">
+            <div class="bm-header">
+                <button class="bm-close-button" onclick="document.getElementById('board-share').classList.toggle('hidden');"><img src="./img/XButton.svg" width="25" height="25" alt=""></button>
+            </div>
+            <form class="bm-body" onsubmit="navigator.clipboard.writeText(document.getElementById('sharing-board-name').value);return false;">
+                <label for="share-board-name">ボードを共有</label><br>
+                <div id="QRCode" class="QRCode">
+                </div>
+                <input type="text" id="sharing-board-name" class="bm-sharing-input-field" value="https://example.com" readonly>
+                <button id="board-share-button" type="submit" class="bm-create-button">リンクをコピー</button>
+            </form>
+        </div>
+        <div id="board-del-window" class="board-del-window hidden">
+            <div class="bd-header">
+                <button class="bd-close-button" onclick="document.getElementById('board-del-window').classList.toggle('hidden');"><img src="./img/XButton.svg" width="25" height="25" alt=""></button>
+            </div>
+            <div class="bd-body">
+                <h2>ボードを削除</h2>
+                <p>本当に削除してもよろしいですか？</p>
+                <button class="bd-cancel-button" onclick="document.getElementById('board-del-window').classList.toggle('hidden');">キャンセル</button>
+                <button class="bd-del-button" onclick="document.getElementById(deleteId).remove();backend.deleteRoom(deleteRoomId);updateRoomList();document.getElementById('board-del-window').classList.toggle('hidden');">ボードを削除</button>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

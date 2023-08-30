@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ポップアップ魚</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="./css/board_manager.css"> -->
+    <link rel="stylesheet" href="./css/page.css">
+    <style>
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="https://isari.f5.si/js/isari_backend.js"></script>
+    <script src="./js/page.js" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+</head>
+
+<body class="page-body">
+    <div id="background" class="background"></div>
+    <div id="cursorDiv"></div>
+
+    <div id="header">
+        <img src="./img/ISARI_icon.svg" id="logo"></img>
+        <b>
+            <div id="title">title</div>
+        </b>
+        <div style="display: flex;align-items: center;">
+            <div id="user-color"> </div>
+            <div id="user">user</div>
+            <div id="user-button"><img src="./img/SettingsButtonDown.svg" alt=""></div>
+        </div>
+    </div>
+    <div class="water-area">
+        <div class="sea" id="sea" draggable="false"></div>
+        <div class="river" id="river" draggable="false"></div>
+    </div>
+
+    <div class="bucketArea" id="bucket">
+    </div>
+    <form
+        onsubmit="event.preventDefault();seaField.createFish(document.getElementById('inputText').value, 'null', 'sea', '');document.getElementById('inputText').value='';">
+        <div class="input-board">
+            <input type="text" id="inputText" class="ib-input-field" placeholder="アイデアをおさかなで表現！">
+            <button class="ib-send-button" type="submit"></button>
+        </div>
+    </form>
+    <button class="add-bucket"
+        onclick="bucketField.createBucket(document.getElementById('inputText').value, 'backet')">+</button>
+
+</body>
+
+</html>
