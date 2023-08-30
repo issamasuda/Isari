@@ -12,12 +12,13 @@
     border: 4px solid rgba(0, 0, 0, 0.2);
 }
 
-#loading{
+#loading {
     display: flex;
     position: absolute;
     flex-direction: column;
     align-items: center;
-    justify-content: center;;
+    justify-content: center;
+
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -36,7 +37,7 @@
     z-index: 1006;
 }
 
-.loading-text{
+.loading-text {
     margin-top: 3.7vh;
     color: white;
     font-family: PT Serif;
@@ -241,6 +242,7 @@
     padding: 10px;
     border-radius: 50%;
     cursor: move;
+
 }
 
 
@@ -406,18 +408,21 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    padding-right: 10px;
 }
 
-.fish-label{
+.fish-label {
     display: flex;
     flex-direction: row-reverse;
     gap: 5px;
     align-items: center;
     /* justify-content: space-between; */
 }
+
 .time-label {
     margin-top: 0px;
 }
+
 .username-label {
     margin-top: 0px;
 }
@@ -481,18 +486,25 @@
     line-height: normal;
 }
 
+/* 非表示クラス */
+.hidden {
+    display: none;
+}
+
 
 /* プロフィール設定とボード共有ウィンドウ */
 .settings-window {
     position: absolute;
     top: 60px;
-    right:  20px;
+    right: 20px;
     width: 170px;
-    height: 90px;
+    height: 60px;
     border-radius: 25px;
     border: 3px solid #FFF;
     background: #FFF;
     box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+
+    z-index: 1010;
 }
 
 .prf-setting {
@@ -526,6 +538,222 @@
     overflow-y: hidden;
 }
 
+.profile-settings {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    height: 500px;
+    border-radius: 25px;
+    border: 3px solid #FFF;
+    background: #FFF;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    z-index: 1100;
+}
+
+.profile-settings h2 {
+    color: #0F5097;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.profile-settings label {
+    color: #0F5097;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.profile-settings-inner {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-settings-item {
+    width: 400px;
+    display: flex;
+    column-gap: 5px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    padding-right: 10px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #60ADFF;
+    background: #FFF;
+    width: 170px;
+    height: 4px;
+}
+
+input[type="color"] {
+    border-radius: 5px;
+    border: 2px solid #60ADFF;
+    background: #FFF;
+    width: 170px;
+    height: 28px;
+}
+
+.start-button {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 700;
+    width: 177px;
+    height: 40px;
+    border-radius: 10px;
+    background: #F7773A;
+}
+
+.start-button:hover {
+    background: #fa8e58;
+}
+
+#start-button {
+    transition: transform 0.2s ease-in-out;
+}
+
+#start-button:active {
+    transform: scale(0.98);
+}
+
+/* ここからボードをつくるウィンドウ */
+
+.board-make-window {
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 250px;
+    height: 180px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+    background: #FFF;
+    position: relative;
+}
+
+.board-share-window {
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 25px;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+    background: #FFF;
+    position: relative;
+    z-index: 99;
+}
+
+.bm-body {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.bm-body label {
+    color: #0F5097;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.bm-close-button {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.bm-body {
+    padding: 20px;
+}
+
+.bm-input-field {
+    width: 180px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #F3F3F3;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+}
+
+.bm-share-input-field {
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #F3F3F3;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+}
+
+.bm-sharing-input-field {
+    width: 200px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #F3F3F3;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+}
+
+.bm-create-button {
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 700;
+    width: 140px;
+    height: 30px;
+    border-radius: 10px;
+    background: #F7773A;
+}
+
+.bm-create-button:hover {
+    background: #fa8e58;
+}
+
+.bm-create-button:active {
+    transform: scale(0.98);
+}
+
+.bm-create-button:disabled {
+    background: #ffc5aa;
+}
+
+.QRCode {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+
 @media (max-width: 768px) {
     .input-board {
         min-width: 250px;
@@ -557,6 +785,9 @@
 }
 
 @media (max-height: 800px) {
+
+
+
     .sea {
         position: absolute;
         width: 100%;
@@ -571,7 +802,7 @@
 
     .river {
         position: absolute;
-        width: 100vw;
+        width: 100%;
         height: 380px;
         top: 350px;
         margin: 0 auto;
@@ -601,8 +832,7 @@
 
     /* ヘッダー */
     #header {
-        padding-top: 20px;
-        padding-left: 20px;
+        padding: 0px 10px 0px 10px;
         display: flex;
         gap: 10px;
         flex-direction: row;
@@ -628,4 +858,20 @@
         overflow-x: hidden;
         overflow-y: auto;
     }
+
+    /* プロフィール設定とボード共有ウィンドウ */
+    .settings-window {
+        position: absolute;
+        top: 60px;
+        right: calc(20px + 40%);
+        width: 170px;
+        height: 60px;
+        border-radius: 25px;
+        border: 3px solid #FFF;
+        background: #FFF;
+        box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+
+        z-index: 1010;
+    }
+
 }

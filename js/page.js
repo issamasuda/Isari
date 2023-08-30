@@ -440,9 +440,23 @@ function isariCursorCallback(values, parentId) {
 }
 
 
+
 // グローバルから見えるインスタンスの変数を作成
 let seaField, riverField, bucketField, board;
 let userName, userColor, pageName, pageId, password;
+
+// 設定表示 
+function setupShareWindow() {
+    document.getElementById('profile-settings').classList.remove('hidden');
+    const url = createShareUrl(pageId, pageName, password);
+    document.getElementById("sharing-board-name").value = url;
+    createShare2dCode(pageId, pageName, password, "QRCode")
+}
+
+function setValues() {
+    localStorage.setItem('userName', userNameElement.value);
+    localStorage.setItem('userColor', userColorElement.value);
+}
 
 // ボードクラス
 class Board {
@@ -464,6 +478,10 @@ class Board {
         document.getElementById("title").innerText = pageName;
         document.getElementById("user").innerText = userName;
         document.getElementById("user-color").style.backgroundColor = userColor;
+        let userNameElement = document.getElementById("username");
+        let userColorElement = document.getElementById("usercolor");
+        if (localStorage.userName != null) userNameElement.value = localStorage.userName;
+        if (localStorage.userColor != null) userColorElement.value = localStorage.userColor;
         this.connect();
     }
 
