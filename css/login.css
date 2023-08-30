@@ -66,6 +66,8 @@ body {
     height: 40px;
     border-radius: 10px;
     background: #F7773A;
+  }  .start-button:hover {
+    background: #fa8e58;
   }
 
 #start-button {
@@ -75,6 +77,7 @@ body {
 #start-button:active {
     transform: scale(0.98);  
   }
+  
 
   /* ここからボード削除ウィンドウ */
 .board-del-window {

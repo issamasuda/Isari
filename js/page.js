@@ -55,7 +55,7 @@ class SeaField extends Field {
     handleDrop(e) {
         const droppedElement = document.getElementById(e.dataTransfer.getData('id'));
         const droppedParentElement = document.getElementById(e.dataTransfer.getData('parentId'));
-        if (droppedParentElement.classList.contains("fish")) {
+        if (droppedParentElement.classList.contains("fish") && droppedParentElement.parentElement.id == "river") {
             this.createFish(droppedParentElement.firstElementChild.children[1].innerHTML, "position", "type", `convert_${e.dataTransfer.getData('id')}`);
         }
     }
@@ -140,14 +140,14 @@ class RiverField extends Field {
         const fishMoveInterval = 20;  // 魚の動きの更新間隔（ms）
         setInterval(this.moveFish.bind(this), fishMoveInterval);
         const fishCreationInterval = 3000;  // 魚の生成間隔（ms）
-        
+
         this.flag = true;
-        function SetFlag(bool){
+        function SetFlag(bool) {
             this.flag = bool;
         }
         let func = SetFlag.bind(this);
         setInterval(this.createFish.bind(this), fishCreationInterval);
-        
+
         // フォーカスが当たった場合の処理
         window.addEventListener("focus", function () {
             console.log("active")
@@ -182,7 +182,7 @@ class RiverField extends Field {
 
     // 魚を生成
     createFish() {
-        if(this.flag == false)return;
+        if (this.flag == false) return;
         function getRandomWord() {
             const riverWords = ["apple", "banana", "orange", "grape", "melon"];
             if (riverWords.length === 0) {
@@ -340,6 +340,74 @@ function createUuid4() {
     });
 }
 
+function isariCursorCallback(values, parentId) {
+    const parentCursor = document.getElementById(parentId);
+    // 既存のカーソル要素をクリア
+    parentCursor.innerHTML = '';
+    // 位置を変更
+    values.forEach(function (value, key) {
+        if ("cursor" in value) {
+            for (let [key, pos] of Object.entries(value.cursor)) {
+                const element = document.getElementById(key);
+                const rect = element.getBoundingClientRect();
+                // カーソルの大きさ
+                const cursorWidth = 35;
+                const cursorHeight = 35;
+                // 要素のスクロール位置を取得
+                const scrollLeft = element.scrollLeft || 0;
+                const scrollTop = element.scrollTop || 0;
+                // スクロール位置をカーソル位置に反映
+                let cursorX = pos.x + element.getBoundingClientRect().left - scrollLeft - (cursorWidth / 2);
+                let cursorY = pos.y + element.getBoundingClientRect().top - scrollTop - (cursorHeight / 2);
+                
+                // カーソル座標が要素の境界内にあるかをチェック
+                if (pos.x - scrollLeft >= 0 && pos.x - scrollLeft <= rect.width && pos.y - scrollTop >= 0 && pos.y - scrollTop <= rect.height) {
+                    // カーソル座標が要素の境界内にある場合のみ描画
+                    let cursorDiv = document.createElement('div');
+                    cursorDiv.style.width = cursorWidth + 'px';
+                    cursorDiv.style.height = cursorHeight + 'px';
+                    cursorDiv.style.borderRadius = '50%';
+                    cursorDiv.style.borderWidth = '0px';
+                    cursorDiv.style.borderStyle = 'solid';
+                    cursorDiv.style.borderColor = value.user.color;
+                    cursorDiv.style.backgroundColor = 'transparent';
+                    cursorDiv.style.position = 'absolute';
+                    cursorDiv.className = 'cursor';
+                    cursorDiv.style.pointerEvents = 'none';
+                    cursorDiv.style.left = cursorX + 'px';
+                    cursorDiv.style.top = cursorY + 'px';
+                    cursorDiv.style.zIndex = '1000';
+                    cursorDiv.insertAdjacentHTML('afterbegin', `
+                    <svg width="${cursorWidth}" height="${cursorHeight}" viewBox="0 0 30 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24.7998" cy="5" r="4" fill="${value.user.color}" stroke="white" stroke-width="2"/>
+                    <path d="M25.7998 5C25.7998 5.55228 25.3521 6 24.7998 6C24.2475 6 23.7998 5.55228 23.7998 5C23.7998 4.44772 24.2475 4 24.7998 4C25.3521 4 25.7998 4.44772 25.7998 5Z" fill="white"/>
+                    <path d="M22.5002 25.2V8.69995H27V25.2C26.3333 29.2 22.8 37.2 14 37.2C3 37.2 1.00032 26.7811 1.00016 25.2C1 23.7 1.00006 21.7 1 20.2C1.5 15.7 6.35646 13.4862 8.50016 12.2C11 10.7 9.83349 12.7 9.50016 13.7C9.16682 15.0333 8.60016 18.2 9.00016 20.2C9.40016 22.2 8.16682 21.7 7.50016 21.2L6.00016 20.2C5.50016 20.7 5.50016 24.2 5.50016 25.2C5.50016 26.2 7.00016 33.7 14.0002 32.7C19.6002 31.9 22.0002 27.3666 22.5002 25.2Z" fill="${value.user.color}" stroke="white" stroke-width="2"/>
+                    <path d="M23.5 7.69995H26V9.69995H23.5V7.69995Z" fill="${value.user.color}"/>
+                    </svg>             
+                    `);
+                    // ユーザー名の追加
+                    var usernameSpan = document.createElement('span');
+                    usernameSpan.style.position = 'absolute';
+                    usernameSpan.style.bottom = '0px'; // カーソルの下側
+                    usernameSpan.style.fontSize = '12px';
+                    usernameSpan.style.color = value.user.color;
+                    usernameSpan.style.pointerEvents = 'none';
+                    usernameSpan.textContent = value.user.name; // ユーザー名を設定
+
+                    // カーソルが中央より右側にあれば名前を左側に表示
+                    if (pos.x - scrollLeft > rect.width / 2) {
+                        usernameSpan.style.right = '35px'; // カーソルの左側
+                    } else {
+                        usernameSpan.style.left = '35px'; // カーソルの右側
+                    }
+
+                    cursorDiv.appendChild(usernameSpan);
+                    parentCursor.appendChild(cursorDiv);
+                }
+            }
+        }
+    });
+}
 
 // グローバルから見えるインスタンスの変数を作成
 let seaField, riverField, bucketField, board;
@@ -379,7 +447,7 @@ class Board {
             // this.handler.addSyncCursolElement("river");
             this.handler.addSyncCursolElement("bucket");
             // ユーザ情報の設定
-            this.handler.setupAwareness(userName, userColor, "cursorDiv", this.handler.sampleCursorCallback);
+            this.handler.setupAwareness(userName, userColor, "cursorDiv", isariCursorCallback); //this.handler.sampleCursorCallback
             // バケツの共有
             this.handler.addSyncElement("bucket");
             // JSONの同期
