@@ -786,6 +786,7 @@ input[type="color"] {
     }
 
     .river {
+        left: 0px;
         width: 100%;
     }
 
