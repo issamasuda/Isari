@@ -279,25 +279,50 @@ class BucketField extends Field {
             })
 
         // ドラッグ可能な要素（バケツ魚）の設定
-        interact('.draggable').draggable({
+        interact('.bucket-fish').draggable({
             modifiers: [
                 interact.modifiers.restrict({
                     restriction: 'parent',
                     endOnly: true
                 })
             ],
-            onmove: function (event) {
+            onmove: async function (event) {
                 var target = event.target,
                     x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
                     y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
                 target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
                 target.setAttribute('data-x', x);
                 target.setAttribute('data-y', y);
+                await document.querySelectorAll('.bucket-fish').forEach((draggable) => {
+                    draggable.style.zIndex = "96";
+                })
+                target.style.zIndex = "102";
+                
+                await document.querySelectorAll('.bucketBox').forEach((draggable) => {
+                    draggable.style.zIndex = "95";
+                })
             }
         });
         // ドラッグ可能な要素（バケツ）の設定
         interact('.bucketBox').draggable({
-            onmove: function (event) {
+            onstart: async function (event) {
+                const resizableRect = event.target.firstElementChild.getBoundingClientRect();
+                document.querySelectorAll('.bucket-fish').forEach((draggable) => {
+                    const draggableRect = draggable.getBoundingClientRect();
+                    if (
+                        draggableRect.x < resizableRect.x + resizableRect.width &&
+                        draggableRect.x + draggableRect.width > resizableRect.x &&
+                        draggableRect.y < resizableRect.y + resizableRect.height &&
+                        draggableRect.y + draggableRect.height > resizableRect.y
+                    ) {
+                        // if (draggable.style.zIndex > 100){
+                        draggable.style.zIndex = 104;
+                        // }
+                    }
+                });
+                event.target.style.zIndex = "103";
+            },
+            onmove: async function (event) {
                 let target = event.target,
                     x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
                     y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
@@ -307,25 +332,54 @@ class BucketField extends Field {
                 target.setAttribute('data-y', y);
 
                 const resizableRect = target.firstElementChild.getBoundingClientRect();
-                document.querySelectorAll('.draggable').forEach((draggable) => {
+                document.querySelectorAll('.bucket-fish').forEach((draggable) => {
                     const draggableRect = draggable.getBoundingClientRect();
                     if (
-                        draggableRect.x >= resizableRect.x &&
-                        draggableRect.y >= resizableRect.y &&
-                        draggableRect.x <= resizableRect.x + resizableRect.width &&
-                        draggableRect.y <= resizableRect.y + resizableRect.height
+                        draggableRect.x < resizableRect.x + resizableRect.width &&
+                        draggableRect.x + draggableRect.width > resizableRect.x &&
+                        draggableRect.y < resizableRect.y + resizableRect.height &&
+                        draggableRect.y + draggableRect.height > resizableRect.y
                     ) {
-                        let draggableTarget = draggable,
+                        if (draggable.style.zIndex == 104){
+                            let draggableTarget = draggable,
                             x = (parseFloat(draggableTarget.getAttribute('data-x')) || 0) + event.dx,
                             y = (parseFloat(draggableTarget.getAttribute('data-y')) || 0) + event.dy;
 
-                        draggableTarget.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
-                        draggableTarget.setAttribute('data-x', x);
-                        draggableTarget.setAttribute('data-y', y);
+                            draggableTarget.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+                            draggableTarget.setAttribute('data-x', x);
+                            draggableTarget.setAttribute('data-y', y);
+                        }
+                        
                     }
                 });
-            }
+                await document.querySelectorAll('.bucketBox').forEach((draggable) => {
+                    draggable.style.zIndex = "95";
+                })
+                target.style.zIndex = "103";
+            },
+            onend: async function (event) {
+                const resizableRect = event.target.firstElementChild.getBoundingClientRect();
+                document.querySelectorAll('.bucket-fish').forEach((draggable) => {
+                    const draggableRect = draggable.getBoundingClientRect();
+                    if (
+                        draggableRect.x < resizableRect.x + resizableRect.width &&
+                        draggableRect.x + draggableRect.width > resizableRect.x &&
+                        draggableRect.y < resizableRect.y + resizableRect.height &&
+                        draggableRect.y + draggableRect.height > resizableRect.y
+                    ) {
+                        if (draggable.style.zIndex > 100){
+                            draggable.style.zIndex = 96;
+                        }
+                    }
+                    draggable.style.zIndex = 98;
+                });
+                await document.querySelectorAll('.bucketBox').forEach((draggable) => {
+                    draggable.style.zIndex = "95";
+                })
+                event.target.style.zIndex = "97";
+            },
         });
+        
     }
 
     // ドロップイベントのハンドラ
@@ -341,7 +395,7 @@ class BucketField extends Field {
             let id = "bucket_fish_" + createUuid4();
             this.fishNum++;
             this.element.insertAdjacentHTML('afterbegin', `
-                <div id="${id}" class="draggable" data-x="${x}" data-y="${y}" contentEditable style="transform: translate(${x}px, ${y}px);" oncontextmenu="if(window.confirm('削除してもよろしいですか？')){ document.getElementById('${id}').remove();}return false;">
+                <div id="${id}" class="bucket-fish" data-x="${x}" data-y="${y}" contentEditable style="transform: translate(${x}px, ${y}px);" oncontextmenu="if(window.confirm('削除してもよろしいですか？')){ document.getElementById('${id}').remove();}return false;">
                     ${droppedParentElement.firstElementChild.outerHTML}
                 </div>
             `);
@@ -489,33 +543,37 @@ class Board {
         let userColorElement = document.getElementById("usercolor");
         if (localStorage.userName != null) userNameElement.value = localStorage.userName;
         if (localStorage.userColor != null) userColorElement.value = localStorage.userColor;
-        this.connect();
+        this.connect(true);
     }
 
-    connect() {
-        console.log(userName, userColor, pageName, pageId, password);
-        this.handler = new IsariBackend();
-        this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password, timeout: 100000 }).then((message) => {
-            // カーソル共有
-            this.handler.addSyncCursolElement("sea");
-            this.handler.addSyncCursolElement("river");
-            this.handler.addSyncCursolElement("bucket");
-            // ユーザ情報の設定
-            this.handler.setupAwareness(userName, userColor, "cursorDiv", isariCursorCallback);
-            // バケツの共有
-            this.handler.addSyncElement("bucket");
-            // JSONの同期
-            this.jsonHandler = this.handler.startSyncJson('seaJson', (event, ytext) => {
-                seaField.jsonToFishList(this.jsonHandler.getJson());
+    connect(debug = false) {
+        if(debug == false){
+            // console.log(userName, userColor, pageName, pageId, password);
+            this.handler = new IsariBackend();
+            this.handler.connect({ host: "wss://isari.f5.si/ws/", port: 443, room: pageId, password: password, timeout: 100000 }).then((message) => {
+                // カーソル共有
+                this.handler.addSyncCursolElement("sea");
+                this.handler.addSyncCursolElement("river");
+                this.handler.addSyncCursolElement("bucket");
+                // ユーザ情報の設定
+                this.handler.setupAwareness(userName, userColor, "cursorDiv", isariCursorCallback);
+                // バケツの共有
+                this.handler.addSyncElement("bucket");
+                // JSONの同期
+                this.jsonHandler = this.handler.startSyncJson('seaJson', (event, ytext) => {
+                    seaField.jsonToFishList(this.jsonHandler.getJson());
+                });
+                // JSON初期化
+                try {
+                    seaField.jsonToFishList(this.jsonHandler.getJson());
+                } catch (error) {
+                    console.error(error);
+                }
+                document.getElementById("loading").style.display = "none";
             });
-            // JSON初期化
-            try {
-                seaField.jsonToFishList(this.jsonHandler.getJson());
-            } catch (error) {
-                console.error(error);
-            }
+        }else{
             document.getElementById("loading").style.display = "none";
-        });
+        }
     }
 }
 
