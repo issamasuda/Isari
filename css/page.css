@@ -786,6 +786,7 @@ input[type="color"] {
     }
 
     .river {
+        left: 0px;
         width: 100%;
     }
 
@@ -794,6 +795,9 @@ input[type="color"] {
     }
     .water-area {
         width: 100%;
+    }
+    .scroll_bar::-webkit-scrollbar-thumb {
+        background-color: "transparent";
     }
     @page {
         size: A4 landscape;
