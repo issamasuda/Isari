@@ -796,6 +796,9 @@ input[type="color"] {
     .water-area {
         width: 100%;
     }
+    .scroll_bar::-webkit-scrollbar-thumb {
+        background-color: "transparent";
+    }
     @page {
         size: A4 landscape;
         margin: 0;
