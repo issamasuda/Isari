@@ -543,7 +543,7 @@ class Board {
         let userColorElement = document.getElementById("usercolor");
         if (localStorage.userName != null) userNameElement.value = localStorage.userName;
         if (localStorage.userColor != null) userColorElement.value = localStorage.userColor;
-        this.connect(true);
+        this.connect();
     }
 
     connect(debug = false) {
