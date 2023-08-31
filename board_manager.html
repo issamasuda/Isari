@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" sizes="16x16" href="./img/favicon.ico">
     <link rel="icon" type="image/x-icon" sizes="16x16" href="./img/favicon.webp">
     <link rel="icon" type="image/x-icon" sizes="16x16" href="./img/favicon.png">
-    <title>ボード一覧</title>
+    <title>ISARI</title>
     <script src="https://isari.f5.si/js/isari_backend.js"></script>
     <script src="./js/board_manager.js" defer></script>
     <script src="./js/qrcode.js" defer></script>
@@ -19,8 +19,8 @@
     </header>
     <div>
         <div class="board-manager">
-            <div class="board-manager-title">ボード一覧</div>
-            <hr>
+            <div class="board-manager-title">ボードリスト</div>
+            <!-- <hr> -->
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -44,7 +44,7 @@
             <div class="bm-header">
                 <button class="bm-close-button" onclick="document.getElementById('board-make').classList.toggle('hidden');"><img src="./img/XButton.svg" width="25" height="25" alt=""></button>
             </div>
-            <form class="bm-body" onsubmit="backend.createRoom(document.getElementById('board-name').value, '');updateRoomList();document.getElementById('board-make').classList.toggle('hidden');return false;">
+            <form class="bm-body" onsubmit="if(document.getElementById('board-name').value == ''){return false;}backend.createRoom(document.getElementById('board-name').value, '');updateRoomList();document.getElementById('board-make').classList.toggle('hidden');return false;">
                 <label for="board-name">ボード名</label>
                 <input type="text" id="board-name" class="bm-input-field" placeholder="ボードの名前を入力...">
                 <button class="bm-create-button" type="submit" onclick="">ボードを作る</button>

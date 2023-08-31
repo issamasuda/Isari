@@ -62,8 +62,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100vw;
-    height: 100vh;
+    width: 120vw;
+    height: 120vh;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 1004;
 }
@@ -271,6 +271,7 @@ body {
     width: 200px;
     overflow: visible;
     position: absolute;
+    z-index: 96;
 }
 
 .resizable {
@@ -292,7 +293,7 @@ body {
     box-sizing: border-box;
 }
 
-.draggable {
+.bucket-fish {
     position: absolute;
     /* width: auto;
     height: 30px;
@@ -300,7 +301,7 @@ body {
     color: white;
     border-radius: 0.75em;
     padding: 5px;
-    z-index: 10;
+    z-index: 102;
     touch-action: none;
     user-select: none;
 }
@@ -796,6 +797,7 @@ input[type="color"] {
     }
     @page {
         size: A4 landscape;
+        margin: 0;
     }
 }
 
@@ -850,6 +852,7 @@ input[type="color"] {
         width: 100%;
         height: 380px;
         top: 350px;
+        left: 0px;
         margin: 0 auto;
         /* border: 2px solid #000000;
         border-radius: 10px; */
