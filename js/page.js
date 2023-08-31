@@ -476,6 +476,7 @@ function isariCursorCallback(values, parentId) {
                     // usernameSpan.style.webkitTextStroke = '0.5px #FFF';
                     // usernameSpan.style.stroke = '0.5px #FFF';
                     usernameSpan.style.fontWeight = '1200'
+                    usernameSpan.style.width = 'max-content'
                     usernameSpan.textContent = value.user.name; // ユーザー名を設定
 
                     // カーソルが中央より右側にあれば名前を左側に表示

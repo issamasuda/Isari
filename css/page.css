@@ -3,8 +3,6 @@ body {
     -webkit-print-color-adjust: exact;
 }
 
-
-
 .scroll_bar::-webkit-scrollbar {
     width: 2px;
 }
@@ -774,9 +772,11 @@ input[type="color"] {
     .settings-window {
         display: none;
     }
+
     #loading {
         display: none;
     }
+
     body {
         zoom: 0.5;
     }
@@ -793,12 +793,25 @@ input[type="color"] {
     .bucketArea {
         width: 100%;
     }
+
     .water-area {
         width: 100%;
     }
-    .scroll_bar::-webkit-scrollbar-thumb {
+
+    .scroll_bar::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+    
+    .scroll_bar::-webkit-scrollbar-track {
         background-color: "transparent";
     }
+
+    .scroll_bar::-webkit-scrollbar-thumb {
+        border-radius: 0px;
+        border: none;
+    }
+
     @page {
         size: A4 landscape;
         margin: 0;
@@ -927,4 +940,3 @@ input[type="color"] {
     }
 
 }
-
